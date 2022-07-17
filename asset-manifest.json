@@ -1,0 +1,13 @@
+{
+  "files": {
+    "main.css": "/cgpaV2/static/css/main.e1995d9b.css",
+    "main.js": "/cgpaV2/static/js/main.d6189288.js",
+    "index.html": "/cgpaV2/index.html",
+    "main.e1995d9b.css.map": "/cgpaV2/static/css/main.e1995d9b.css.map",
+    "main.d6189288.js.map": "/cgpaV2/static/js/main.d6189288.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.e1995d9b.css",
+    "static/js/main.d6189288.js"
+  ]
+}
