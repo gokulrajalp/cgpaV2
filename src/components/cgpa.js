@@ -6,6 +6,9 @@ import { collection, getDocs } from "firebase/firestore";
 import "./glass.css";
 
 export default function Cgpa() {
+  const [sgpalist, setsgpalist] = useState([]);
+  const [cgpalist, setcgpalist] = useState([]);
+
   function cgpa() {
     let grade = [];
     let points = [];
@@ -27,7 +30,7 @@ export default function Cgpa() {
     }
 
     let credit = [
-      3, 4, 3, 3, 3, 1, 1, 1, 3, 4, 3, 3, 3, 1, 1, 3, 3, 1, 3, 3, 3, 1, 1, 3, 4,
+      3, 4, 3, 3, 3, 1, 1, 1, 3, 4, 3, 3, 3, 1, 1, 3, 4, 1, 3, 3, 3, 1, 1, 3, 3,
       1, 3, 4, 1, 4, 1, 3, 4, 3, 3, 3, 3, 3, 1, 1, 1, 4, 3, 3, 3, 3, 3, 1, 1, 3,
       3, 3, 3, 3, 3, 3, 1, 1, 3, 3, 3, 6, 0, 0, 0, 0, 0, 0,
     ];
@@ -40,11 +43,46 @@ export default function Cgpa() {
       score[i] = points[i] * credit[i];
     }
 
-    console.log(grade);
-    console.log(points);
-    console.log(credit);
-    console.log(score);
+    let total_credit = [19, 18, 19, 23, 22, 24, 20, 15];
+    let total_subject = [8, 7, 8, 9, 9, 9, 8, 4];
+
+    function cgpa_credit(n) {
+      let sum = 0;
+      for (let i = 0; i <= n; i++) {
+        sum += total_credit[i];
+      }
+
+      return sum;
+    }
+
+    let cgpa = 0;
+    let k = 0;
+    for (let i = 0; i < 8; i++) {
+      let sum = 0;
+      for (let j = 0; j < total_subject[i]; j++) {
+        sum += score[k];
+        cgpa += score[k];
+        k = k + 1;
+      }
+
+      sgpalist[i] = sum / total_credit[i];
+      cgpalist[i] = cgpa / cgpa_credit(i);
+    }
+
+    // sgpalist[2] = 5.5;
+    // console.log(sgpalist[2]);
+    // console.log(grade);
+    // console.log(points);
+    // console.log(credit);
+    // console.log(score);
+    // console.log(total_subject);
+    // console.log(total_credit);
+    console.log(sgpalist);
+    console.log(cgpalist);
+    // console.log(score.slice(23, 32));
+    // console.log(credit.slice(23, 32));
   }
+
   let navigate = useNavigate();
 
   const usersCollectionRef = collection(db, "cgpa");
@@ -97,7 +135,7 @@ export default function Cgpa() {
             </select>
             <br />
             Maths – I <nav>(18MA151):</nav>{" "}
-            <select onchange="cgpa()" id="subject2">
+            <select onChange={cgpa} id="subject2">
               <option>O</option>
               <option>A+</option>
               <option>A</option>
@@ -107,7 +145,7 @@ export default function Cgpa() {
             </select>
             <br />
             Chemistry <nav>(18CH051):</nav>{" "}
-            <select onchange="cgpa()" id="subject3">
+            <select onChange={cgpa} id="subject3">
               <option>O</option>
               <option>A+</option>
               <option>A</option>
@@ -117,7 +155,7 @@ export default function Cgpa() {
             </select>
             <br />
             BEEE <nav>(18EE041):</nav>{" "}
-            <select onchange="cgpa()" id="subject4">
+            <select onChange={cgpa} id="subject4">
               <option>O</option>
               <option>A+</option>
               <option>A</option>
@@ -127,7 +165,7 @@ export default function Cgpa() {
             </select>
             <br />
             PST <nav>(18CS111):</nav>{" "}
-            <select onchange="cgpa()" id="subject5">
+            <select onChange={cgpa} id="subject5">
               <option>O</option>
               <option>A+</option>
               <option>A</option>
@@ -137,7 +175,7 @@ export default function Cgpa() {
             </select>
             <br />
             Chemistry Lab <nav>(18CH028):</nav>{" "}
-            <select onchange="cgpa()" id="subject6">
+            <select onChange={cgpa} id="subject6">
               <option>O</option>
               <option>A+</option>
               <option>A</option>
@@ -147,7 +185,7 @@ export default function Cgpa() {
             </select>
             <br />
             PST Lab <nav>(18CS121):</nav>{" "}
-            <select onchange="cgpa()" id="subject7">
+            <select onChange={cgpa} id="subject7">
               <option>O</option>
               <option>A+</option>
               <option>A</option>
@@ -157,7 +195,7 @@ export default function Cgpa() {
             </select>
             <br />
             EG Lab <nav>(18AU027):</nav>{" "}
-            <select onchange="cgpa()" id="subject8">
+            <select onChange={cgpa} id="subject8">
               <option>O</option>
               <option>A+</option>
               <option>A</option>
@@ -177,7 +215,7 @@ export default function Cgpa() {
           <h1>Semester 2</h1>
           <div class="one">
             ENGLISH - II <nav>(18EN251):</nav>{" "}
-            <select onchange="cgpa()" id="subject9">
+            <select onChange={cgpa} id="subject9">
               <option>O</option>
               <option>A+</option>
               <option>A</option>
@@ -187,7 +225,7 @@ export default function Cgpa() {
             </select>
             <br />
             MATHS - II <nav>(18MA243):</nav>{" "}
-            <select onchange="cgpa()" id="subject10">
+            <select onChange={cgpa} id="subject10">
               <option>O</option>
               <option>A+</option>
               <option>A</option>
@@ -197,7 +235,7 @@ export default function Cgpa() {
             </select>
             <br />
             PHYSICS <nav>(18PH043):</nav>{" "}
-            <select onchange="cgpa()" id="subject11">
+            <select onChange={cgpa} id="subject11">
               <option>O</option>
               <option>A+</option>
               <option>A</option>
@@ -206,7 +244,7 @@ export default function Cgpa() {
               <option>RA-F</option>
             </select>
             <br />C <nav>(18CS211):</nav>{" "}
-            <select onchange="cgpa()" id="subject12">
+            <select onChange={cgpa} id="subject12">
               <option>O</option>
               <option>A+</option>
               <option>A</option>
@@ -216,7 +254,7 @@ export default function Cgpa() {
             </select>
             <br />
             MP <nav>(18GE028):</nav>{" "}
-            <select onchange="cgpa()" id="subject13">
+            <select onChange={cgpa} id="subject13">
               <option>O</option>
               <option>A+</option>
               <option>A</option>
@@ -226,7 +264,7 @@ export default function Cgpa() {
             </select>
             <br />
             PHYSICS Lab <nav>(18PH028):</nav>{" "}
-            <select onchange="cgpa()" id="subject14">
+            <select onChange={cgpa} id="subject14">
               <option>O</option>
               <option>A+</option>
               <option>A</option>
@@ -235,7 +273,7 @@ export default function Cgpa() {
               <option>RA-F</option>
             </select>
             <br />C Lab <nav>(18CS221):</nav>{" "}
-            <select onchange="cgpa()" id="subject15">
+            <select onChange={cgpa} id="subject15">
               <option>O</option>
               <option>A+</option>
               <option>A</option>
@@ -245,7 +283,7 @@ export default function Cgpa() {
             </select>
             <br />
             EVS <nav>(18MC052):</nav>{" "}
-            <select onchange="cgpa()" id="subject63">
+            <select onChange={cgpa} id="subject63">
               <option>O</option>
               <option>A+</option>
               <option>A</option>
@@ -267,7 +305,7 @@ export default function Cgpa() {
           <h1>Semester 3</h1>
           <div class="one">
             LDDC <nav>(18EC332):</nav>
-            <select onchange="cgpa()" id="subject16">
+            <select onChange={cgpa} id="subject16">
               <option>O</option>
               <option>A+</option>
               <option>A</option>
@@ -277,7 +315,7 @@ export default function Cgpa() {
             </select>
             <br />
             NCT <nav>(18MA343):</nav>
-            <select onchange="cgpa()" id="subject17">
+            <select onChange={cgpa} id="subject17">
               <option>O</option>
               <option>A+</option>
               <option>A</option>
@@ -287,7 +325,7 @@ export default function Cgpa() {
             </select>
             <br />
             PYTHON Lab <nav>(18CS028):</nav>
-            <select onchange="cgpa()" id="subject18">
+            <select onChange={cgpa} id="subject18">
               <option>O</option>
               <option>A+</option>
               <option>A</option>
@@ -297,7 +335,7 @@ export default function Cgpa() {
             </select>
             <br />
             PYTHON <nav>(18CS043):</nav>
-            <select onchange="cgpa()" id="subject19">
+            <select onChange={cgpa} id="subject19">
               <option>O</option>
               <option>A+</option>
               <option>A</option>
@@ -307,7 +345,7 @@ export default function Cgpa() {
             </select>
             <br />
             DATA STRUCTURES <nav>(18CS311):</nav>
-            <select onchange="cgpa()" id="subject20">
+            <select onChange={cgpa} id="subject20">
               <option>O</option>
               <option>A+</option>
               <option>A</option>
@@ -317,7 +355,7 @@ export default function Cgpa() {
             </select>
             <br />
             COA <nav>(18CS312):</nav>
-            <select onchange="cgpa()" id="subject21">
+            <select onChange={cgpa} id="subject21">
               <option>O</option>
               <option>A+</option>
               <option>A</option>
@@ -327,7 +365,7 @@ export default function Cgpa() {
             </select>
             <br />
             DATA STRUCTURES Lab <nav>(18CS321):</nav>
-            <select onchange="cgpa()" id="subject22">
+            <select onChange={cgpa} id="subject22">
               <option>O</option>
               <option>A+</option>
               <option>A</option>
@@ -337,7 +375,7 @@ export default function Cgpa() {
             </select>
             <br />
             DIGITAL SYSTEMS Lab <nav>(18EC325):</nav>
-            <select onchange="cgpa()" id="subject23">
+            <select onChange={cgpa} id="subject23">
               <option>O</option>
               <option>A+</option>
               <option>A</option>
@@ -347,7 +385,7 @@ export default function Cgpa() {
             </select>
             <br />
             COI <nav>(18MC051):</nav>{" "}
-            <select onchange="cgpa()" id="subject64">
+            <select onChange={cgpa} id="subject64">
               <option>O</option>
               <option>A+</option>
               <option>A</option>
@@ -357,7 +395,7 @@ export default function Cgpa() {
             </select>
             <br />
             CDS - I <nav>(18HR351):</nav>{" "}
-            <select onchange="cgpa()" id="subject65">
+            <select onChange={cgpa} id="subject65">
               <option>O</option>
               <option>A+</option>
               <option>A</option>
@@ -378,7 +416,7 @@ export default function Cgpa() {
           <h1>Semester 4</h1>
           <div class="one">
             JP <nav>(18CS002):</nav>
-            <select onchange="cgpa()" id="subject24">
+            <select onChange={cgpa} id="subject24">
               <option>O</option>
               <option>A+</option>
               <option>A</option>
@@ -388,7 +426,7 @@ export default function Cgpa() {
             </select>
             <br />
             OS <nav>(18CS003):</nav>
-            <select onchange="cgpa()" id="subject25">
+            <select onChange={cgpa} id="subject25">
               <option>O</option>
               <option>A+</option>
               <option>A</option>
@@ -398,7 +436,7 @@ export default function Cgpa() {
             </select>
             <br />
             MP AND MC Lab <nav>(18EC425):</nav>
-            <select onchange="cgpa()" id="subject26">
+            <select onChange={cgpa} id="subject26">
               <option>O</option>
               <option>A+</option>
               <option>A</option>
@@ -408,7 +446,7 @@ export default function Cgpa() {
             </select>
             <br />
             MP AND MC <nav>(18EC436):</nav>
-            <select onchange="cgpa()" id="subject27">
+            <select onChange={cgpa} id="subject27">
               <option>O</option>
               <option>A+</option>
               <option>A</option>
@@ -418,7 +456,7 @@ export default function Cgpa() {
             </select>
             <br />
             PDM <nav>(18MA441):</nav>
-            <select onchange="cgpa()" id="subject28">
+            <select onChange={cgpa} id="subject28">
               <option>O</option>
               <option>A+</option>
               <option>A</option>
@@ -428,7 +466,7 @@ export default function Cgpa() {
             </select>
             <br />
             OS Lab <nav>(18CS422):</nav>
-            <select onchange="cgpa()" id="subject29">
+            <select onChange={cgpa} id="subject29">
               <option>O</option>
               <option>A+</option>
               <option>A</option>
@@ -438,7 +476,7 @@ export default function Cgpa() {
             </select>
             <br />
             DAA <nav>(18CS412):</nav>
-            <select onchange="cgpa()" id="subject30">
+            <select onChange={cgpa} id="subject30">
               <option>O</option>
               <option>A+</option>
               <option>A</option>
@@ -448,7 +486,7 @@ export default function Cgpa() {
             </select>
             <br />
             JP Lab <nav>(18CS421):</nav>
-            <select onchange="cgpa()" id="subject31">
+            <select onChange={cgpa} id="subject31">
               <option>O</option>
               <option>A+</option>
               <option>A</option>
@@ -458,7 +496,7 @@ export default function Cgpa() {
             </select>
             <br />
             SE <nav>(18CS411):</nav>
-            <select onchange="cgpa()" id="subject32">
+            <select onChange={cgpa} id="subject32">
               <option>O</option>
               <option>A+</option>
               <option>A</option>
@@ -468,7 +506,7 @@ export default function Cgpa() {
             </select>
             <br />
             CDS - II <nav>(18HR432):</nav>{" "}
-            <select onchange="cgpa()" id="subject66">
+            <select onChange={cgpa} id="subject66">
               <option>O</option>
               <option>A+</option>
               <option>A</option>
@@ -489,7 +527,7 @@ export default function Cgpa() {
           <h1>Semester 5</h1>
           <div class="one">
             TOC <nav>(18CS511):</nav>
-            <select onchange="cgpa()" id="subject33">
+            <select onChange={cgpa} id="subject33">
               <option>O</option>
               <option>A+</option>
               <option>A</option>
@@ -499,7 +537,7 @@ export default function Cgpa() {
             </select>
             <br />
             DBMS <nav>(18CS512):</nav>
-            <select onchange="cgpa()" id="subject34">
+            <select onChange={cgpa} id="subject34">
               <option>O</option>
               <option>A+</option>
               <option>A</option>
@@ -509,7 +547,7 @@ export default function Cgpa() {
             </select>
             <br />
             WP <nav>(18CS513):</nav>
-            <select onchange="cgpa()" id="subject35">
+            <select onChange={cgpa} id="subject35">
               <option>O</option>
               <option>A+</option>
               <option>A</option>
@@ -519,7 +557,7 @@ export default function Cgpa() {
             </select>
             <br />
             CN <nav>(18CS514):</nav>
-            <select onchange="cgpa()" id="subject36">
+            <select onChange={cgpa} id="subject36">
               <option>O</option>
               <option>A+</option>
               <option>A</option>
@@ -529,7 +567,7 @@ export default function Cgpa() {
             </select>
             <br />
             ED <nav>(18HS003):</nav>
-            <select onchange="cgpa()" id="subject37">
+            <select onChange={cgpa} id="subject37">
               <option>O</option>
               <option>A+</option>
               <option>A</option>
@@ -539,7 +577,7 @@ export default function Cgpa() {
             </select>
             <br />
             Elective-I{" "}
-            <select onchange="cgpa()" id="subject38">
+            <select onChange={cgpa} id="subject38">
               <option>O</option>
               <option>A+</option>
               <option>A</option>
@@ -549,7 +587,7 @@ export default function Cgpa() {
             </select>
             <br />
             DBMS Lab <nav>(18CS521):</nav>
-            <select onchange="cgpa()" id="subject39">
+            <select onChange={cgpa} id="subject39">
               <option>O</option>
               <option>A+</option>
               <option>A</option>
@@ -559,7 +597,7 @@ export default function Cgpa() {
             </select>
             <br />
             Web & Open Source Lab <nav>(18CS522):</nav>
-            <select onchange="cgpa()" id="subject40">
+            <select onChange={cgpa} id="subject40">
               <option>O</option>
               <option>A+</option>
               <option>A</option>
@@ -569,7 +607,7 @@ export default function Cgpa() {
             </select>
             <br />
             CN Lab <nav>(18CS523):</nav>
-            <select onchange="cgpa()" id="subject41">
+            <select onChange={cgpa} id="subject41">
               <option>O</option>
               <option>A+</option>
               <option>A</option>
@@ -579,7 +617,7 @@ export default function Cgpa() {
             </select>
             <br />
             CDS - III <nav>(18HR533):</nav>
-            <select onchange="cgpa()" id="subject67">
+            <select onChange={cgpa} id="subject67">
               <option>O</option>
               <option>A+</option>
               <option>A</option>
@@ -600,7 +638,7 @@ export default function Cgpa() {
           <h1>Semester 6</h1>
           <div class="one">
             PCD <nav>(18CS611):</nav>
-            <select onchange="cgpa()" id="subject42">
+            <select onChange={cgpa} id="subject42">
               <option>O</option>
               <option>A+</option>
               <option>A</option>
@@ -610,7 +648,7 @@ export default function Cgpa() {
             </select>
             <br />
             MC <nav>(18CS612):</nav>
-            <select onchange="cgpa()" id="subject43">
+            <select onChange={cgpa} id="subject43">
               <option>O</option>
               <option>A+</option>
               <option>A</option>
@@ -620,7 +658,7 @@ export default function Cgpa() {
             </select>
             <br />
             ST <nav>(18CS613):</nav>
-            <select onchange="cgpa()" id="subject44">
+            <select onChange={cgpa} id="subject44">
               <option>O</option>
               <option>A+</option>
               <option>A</option>
@@ -630,7 +668,7 @@ export default function Cgpa() {
             </select>
             <br />
             Elective - II{" "}
-            <select onchange="cgpa()" id="subject45">
+            <select onChange={cgpa} id="subject45">
               <option>O</option>
               <option>A+</option>
               <option>A</option>
@@ -640,7 +678,7 @@ export default function Cgpa() {
             </select>
             <br />
             Elective - III{" "}
-            <select onchange="cgpa()" id="subject46">
+            <select onChange={cgpa} id="subject46">
               <option>O</option>
               <option>A+</option>
               <option>A</option>
@@ -650,7 +688,7 @@ export default function Cgpa() {
             </select>
             <br />
             Open Elective - I{" "}
-            <select onchange="cgpa()" id="subject47">
+            <select onChange={cgpa} id="subject47">
               <option>O</option>
               <option>A+</option>
               <option>A</option>
@@ -660,7 +698,7 @@ export default function Cgpa() {
             </select>
             <br />
             CT LAB <nav>(18CS621):</nav>
-            <select onchange="cgpa()" id="subject48">
+            <select onChange={cgpa} id="subject48">
               <option>O</option>
               <option>A+</option>
               <option>A</option>
@@ -670,7 +708,7 @@ export default function Cgpa() {
             </select>
             <br />
             ST Lab <nav>(18CS622):</nav>
-            <select onchange="cgpa()" id="subject49">
+            <select onChange={cgpa} id="subject49">
               <option>O</option>
               <option>A+</option>
               <option>A</option>
@@ -680,7 +718,7 @@ export default function Cgpa() {
             </select>
             <br />
             Mini Project <nav>(18CS623):</nav>
-            <select onchange="cgpa()" id="subject50">
+            <select onChange={cgpa} id="subject50">
               <option>O</option>
               <option>A+</option>
               <option>A</option>
@@ -690,7 +728,7 @@ export default function Cgpa() {
             </select>
             <br />
             CDS - IV <nav>(18HR634):</nav>
-            <select onchange="cgpa()" id="subject68">
+            <select onChange={cgpa} id="subject68">
               <option>O</option>
               <option>A+</option>
               <option>A</option>
@@ -711,7 +749,7 @@ export default function Cgpa() {
           <h1>Semester 7</h1>
           <div class="one">
             PE <nav>(18HS051):</nav>
-            <select onchange="cgpa()" id="subject51">
+            <select onChange={cgpa} id="subject51">
               <option>O</option>
               <option>A+</option>
               <option>A</option>
@@ -721,7 +759,7 @@ export default function Cgpa() {
             </select>
             <br />
             BD and CC <nav>(18CS711):</nav>
-            <select onchange="cgpa()" id="subject52">
+            <select onChange={cgpa} id="subject52">
               <option>O</option>
               <option>A+</option>
               <option>A</option>
@@ -731,7 +769,7 @@ export default function Cgpa() {
             </select>
             <br />
             CNS <nav>(18CS712):</nav>
-            <select onchange="cgpa()" id="subject53">
+            <select onChange={cgpa} id="subject53">
               <option>O</option>
               <option>A+</option>
               <option>A</option>
@@ -741,7 +779,7 @@ export default function Cgpa() {
             </select>
             <br />
             GM <nav>(18CS713):</nav>
-            <select onchange="cgpa()" id="subject54">
+            <select onChange={cgpa} id="subject54">
               <option>O</option>
               <option>A+</option>
               <option>A</option>
@@ -751,7 +789,7 @@ export default function Cgpa() {
             </select>
             <br />
             Elective - IV{" "}
-            <select onchange="cgpa()" id="subject55">
+            <select onChange={cgpa} id="subject55">
               <option>O</option>
               <option>A+</option>
               <option>A</option>
@@ -761,7 +799,7 @@ export default function Cgpa() {
             </select>
             <br />
             Open Elective - II{" "}
-            <select onchange="cgpa()" id="subject56">
+            <select onChange={cgpa} id="subject56">
               <option>O</option>
               <option>A+</option>
               <option>A</option>
@@ -771,7 +809,7 @@ export default function Cgpa() {
             </select>
             <br />
             BD and CC Lab <nav>(18CS412):</nav>
-            <select onchange="cgpa()" id="subject57">
+            <select onChange={cgpa} id="subject57">
               <option>O</option>
               <option>A+</option>
               <option>A</option>
@@ -781,7 +819,7 @@ export default function Cgpa() {
             </select>
             <br />
             GM Lab <nav>(18CS421):</nav>
-            <select onchange="cgpa()" id="subject58">
+            <select onChange={cgpa} id="subject58">
               <option>O</option>
               <option>A+</option>
               <option>A</option>
@@ -802,7 +840,7 @@ export default function Cgpa() {
           <h1>Semester 8</h1>
           <div class="one">
             Elective – V{" "}
-            <select onchange="cgpa()" id="subject59">
+            <select onChange={cgpa} id="subject59">
               <option>O</option>
               <option>A+</option>
               <option>A</option>
@@ -812,7 +850,7 @@ export default function Cgpa() {
             </select>
             <br />
             Elective – VI{" "}
-            <select onchange="cgpa()" id="subject60">
+            <select onChange={cgpa} id="subject60">
               <option>O</option>
               <option>A+</option>
               <option>A</option>
@@ -822,7 +860,7 @@ export default function Cgpa() {
             </select>
             <br />
             Open Elective - III
-            <select onchange="cgpa()" id="subject61">
+            <select onChange={cgpa} id="subject61">
               <option>O</option>
               <option>A+</option>
               <option>A</option>
@@ -832,7 +870,7 @@ export default function Cgpa() {
             </select>
             <br />
             Project Work <nav>(18CS821):</nav>
-            <select onchange="cgpa()" id="subject62">
+            <select onChange={cgpa} id="subject62">
               <option>O</option>
               <option>A+</option>
               <option>A</option>
