@@ -48,8 +48,6 @@ export default function Cgpa() {
       score[i] = points[i] * credit[i];
     }
 
-    // let total_credit = [19, 18, 19, 23, 22, 24, 20, 15];
-
     function cgpa_credit(n) {
       let sum = 0;
       for (let i = 0; i < n; i++) {
