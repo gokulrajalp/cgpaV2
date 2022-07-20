@@ -6,14 +6,20 @@ import { collection, getDocs } from "firebase/firestore";
 import "./glass.css";
 
 export default function Cgpa() {
-  const [sgpalist, setsgpalist] = useState([]);
-  const [cgpalist, setcgpalist] = useState([]);
+  const [sgpalist, setSgpalist] = useState([]);
+  const [cgpalist, setCgpalist] = useState([]);
 
   function cgpa() {
     let grade = [];
     let points = [];
 
-    function findpoint(char) {
+    let credit = [
+      3, 4, 3, 3, 3, 1, 1, 1, 3, 4, 3, 3, 3, 1, 1, 3, 4, 1, 3, 3, 3, 1, 1, 3, 3,
+      1, 3, 4, 1, 4, 1, 3, 4, 3, 3, 3, 3, 3, 1, 1, 1, 4, 3, 3, 3, 3, 3, 1, 1, 3,
+      3, 3, 3, 3, 3, 3, 1, 1, 3, 3, 3, 6, 0, 0, 0, 0, 0, 0,
+    ];
+
+    function findpoint(char, i) {
       if (char === "O") {
         return 10;
       } else if (char === "A+") {
@@ -25,55 +31,55 @@ export default function Cgpa() {
       } else if (char === "B+") {
         return 6;
       } else {
+        credit[i] = 0;
         return 0;
       }
     }
-
-    let credit = [
-      3, 4, 3, 3, 3, 1, 1, 1, 3, 4, 3, 3, 3, 1, 1, 3, 4, 1, 3, 3, 3, 1, 1, 3, 3,
-      1, 3, 4, 1, 4, 1, 3, 4, 3, 3, 3, 3, 3, 1, 1, 1, 4, 3, 3, 3, 3, 3, 1, 1, 3,
-      3, 3, 3, 3, 3, 3, 1, 1, 3, 3, 3, 6, 0, 0, 0, 0, 0, 0,
-    ];
 
     let score = [];
 
     for (let i = 0; i < 68; i++) {
       grade[i] = document.querySelector(`#subject${i + 1}`).value;
-      points[i] = findpoint(grade[i]);
+      points[i] = findpoint(grade[i], i);
       score[i] = points[i] * credit[i];
     }
 
-    let total_credit = [19, 18, 19, 23, 22, 24, 20, 15];
+    // let total_credit = [19, 18, 19, 23, 22, 24, 20, 15];
     let total_subject = [8, 7, 8, 9, 9, 9, 8, 4];
 
     function cgpa_credit(n) {
       let sum = 0;
-      for (let i = 0; i <= n; i++) {
-        sum += total_credit[i];
+      for (let i = 0; i < n; i++) {
+        sum += credit[i];
       }
-
+      console.log(sum);
       return sum;
     }
 
     let cgpa = 0;
     let k = 0;
+
     for (let i = 0; i < 8; i++) {
       let sum = 0;
+
+      let sgpa = 0;
       for (let j = 0; j < total_subject[i]; j++) {
         sum += score[k];
         cgpa += score[k];
+        sgpa += credit[k];
         k = k + 1;
       }
+      console.log(sum, cgpa);
 
-      sgpalist[i] = sum / total_credit[i];
-      cgpalist[i] = cgpa / cgpa_credit(i);
+      sgpalist[i] = sum / sgpa;
+      cgpalist[i] = cgpa / cgpa_credit(k);
     }
 
     // sgpalist[2] = 5.5;
     // console.log(sgpalist[2]);
     // console.log(grade);
     // console.log(points);
-    // console.log(credit);
+    console.log(credit);
     // console.log(score);
     // console.log(total_subject);
     // console.log(total_credit);
@@ -106,6 +112,8 @@ export default function Cgpa() {
     navigate(`/`);
   }
 
+  // cgpa();
+
   return (
     <div className="cgpa">
       {users.map((users) => {
@@ -117,13 +125,13 @@ export default function Cgpa() {
         }
       })}
 
-      <h1 class="head">CGPA Calculater</h1>
+      <h1 className="head">CGPA Calculater</h1>
 
       <div className="pb-5">
         <div className="first">
           <h1>Semester 1</h1>
 
-          <div class="one">
+          <div className="one">
             English – I <nav>(18EN151):</nav>{" "}
             <select onChange={cgpa} id="subject1">
               <option>O</option>
@@ -205,15 +213,15 @@ export default function Cgpa() {
             </select>
           </div>
 
-          <h2 id="Result1">SGPA : </h2>
-          <h2 id="cgpa0">CGPA : </h2>
+          <h2 id="Result1">SGPA : {sgpalist[1]} </h2>
+          <h2 id="cgpa0">CGPA : {cgpalist[1]} </h2>
         </div>
       </div>
 
       <div className="pb-5">
-        <div class="second">
+        <div className="second">
           <h1>Semester 2</h1>
-          <div class="one">
+          <div className="one">
             ENGLISH - II <nav>(18EN251):</nav>{" "}
             <select onChange={cgpa} id="subject9">
               <option>O</option>
@@ -294,16 +302,16 @@ export default function Cgpa() {
             <br />
           </div>
 
-          <h2 id="Result2">SGPA : </h2>
+          <h2 id="Result2">SGPA : {sgpalist[2]} </h2>
 
-          <h2 id="cgpa1">CGPA : </h2>
+          <h2 id="cgpa1">CGPA : {cgpalist[2]} </h2>
         </div>
       </div>
 
       <div className="pb-5">
-        <div class="third">
+        <div className="third">
           <h1>Semester 3</h1>
-          <div class="one">
+          <div className="one">
             LDDC <nav>(18EC332):</nav>
             <select onChange={cgpa} id="subject16">
               <option>O</option>
@@ -406,15 +414,15 @@ export default function Cgpa() {
             <br />
           </div>
 
-          <h2 id="Result3">SGPA : </h2>
+          <h2 id="Result3">SGPA : {sgpalist[3]} </h2>
 
-          <h2 id="cgpa2">CGPA : </h2>
+          <h2 id="cgpa2">CGPA : {cgpalist[3]} </h2>
         </div>
       </div>
       <div className="pb-5">
-        <div class="fourth">
+        <div className="fourth">
           <h1>Semester 4</h1>
-          <div class="one">
+          <div className="one">
             JP <nav>(18CS002):</nav>
             <select onChange={cgpa} id="subject24">
               <option>O</option>
@@ -517,15 +525,15 @@ export default function Cgpa() {
             <br />
           </div>
 
-          <h2 id="Result4">SGPA : </h2>
+          <h2 id="Result4">SGPA : {sgpalist[4]} </h2>
 
-          <h2 id="cgpa3">CGPA : </h2>
+          <h2 id="cgpa3">CGPA : {cgpalist[4]} </h2>
         </div>
       </div>
       <div className="pb-5">
-        <div class="fiveth">
+        <div className="fiveth">
           <h1>Semester 5</h1>
-          <div class="one">
+          <div className="one">
             TOC <nav>(18CS511):</nav>
             <select onChange={cgpa} id="subject33">
               <option>O</option>
@@ -628,15 +636,15 @@ export default function Cgpa() {
             <br />
           </div>
 
-          <h2 id="Result5">SGPA : </h2>
+          <h2 id="Result5">SGPA : {sgpalist[5]} </h2>
 
-          <h2 id="cgpa4">CGPA : </h2>
+          <h2 id="cgpa4">CGPA : {cgpalist[5]} </h2>
         </div>
       </div>
       <div className="pb-5">
-        <div class="sixth">
+        <div className="sixth">
           <h1>Semester 6</h1>
-          <div class="one">
+          <div className="one">
             PCD <nav>(18CS611):</nav>
             <select onChange={cgpa} id="subject42">
               <option>O</option>
@@ -739,15 +747,15 @@ export default function Cgpa() {
             <br />
           </div>
 
-          <h2 id="Result6">SGPA : </h2>
+          <h2 id="Result6">SGPA : {sgpalist[6]} </h2>
 
-          <h2 id="cgpa6">CGPA : </h2>
+          <h2 id="cgpa6">CGPA : {cgpalist[6]} </h2>
         </div>
       </div>
       <div className="pb-5">
-        <div class="seventh">
+        <div className="seventh">
           <h1>Semester 7</h1>
-          <div class="one">
+          <div className="one">
             PE <nav>(18HS051):</nav>
             <select onChange={cgpa} id="subject51">
               <option>O</option>
@@ -830,15 +838,15 @@ export default function Cgpa() {
             <br />
           </div>
 
-          <h2 id="Result7">SGPA : </h2>
+          <h2 id="Result7">SGPA : {sgpalist[7]} </h2>
 
-          <h2 id="cgpa7">CGPA : </h2>
+          <h2 id="cgpa7">CGPA : {cgpalist[7]} </h2>
         </div>
       </div>
       <div className="pb-5">
-        <div class="eighth">
+        <div className="eighth">
           <h1>Semester 8</h1>
-          <div class="one">
+          <div className="one">
             Elective – V{" "}
             <select onChange={cgpa} id="subject59">
               <option>O</option>
@@ -881,9 +889,9 @@ export default function Cgpa() {
             <br />
           </div>
 
-          <h2 id="Result8">SGPA : </h2>
+          <h2 id="Result8">SGPA : {sgpalist[8]} </h2>
 
-          <h2 id="cgpa8">CGPA : </h2>
+          <h2 id="cgpa8">CGPA : {cgpalist[8]} </h2>
         </div>
       </div>
       <button
