@@ -79,9 +79,6 @@ export default function Cgpa() {
       setCgpalist(Cgpalist);
     }
 
-    // sgpalist[2] = 5.5;
-    // console.log(sgpalist[2]);
-    // console.log(grade);
     // console.log(points);
     // console.log(credit);
     // console.log(score);
