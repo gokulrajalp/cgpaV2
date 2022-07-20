@@ -2,7 +2,7 @@ import React from "react";
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { db } from "../firebase-config";
-import { collection, getDocs } from "firebase/firestore";
+import { collection, getDocs, addDoc } from "firebase/firestore";
 import "./glass.css";
 
 export default function Cgpa() {
@@ -10,6 +10,8 @@ export default function Cgpa() {
   const [cgpalist, setCgpalist] = useState([]);
 
   function cgpa() {
+    let Cgpalist = [];
+    let Sgpalist = [];
     let grade = [];
     let points = [];
 
@@ -18,6 +20,8 @@ export default function Cgpa() {
       1, 3, 4, 1, 4, 1, 3, 4, 3, 3, 3, 3, 3, 1, 1, 1, 4, 3, 3, 3, 3, 3, 1, 1, 3,
       3, 3, 3, 3, 3, 3, 1, 1, 3, 3, 3, 6, 0, 0, 0, 0, 0, 0,
     ];
+
+    let total_subject = [8, 7, 8, 9, 9, 9, 8, 4];
 
     function findpoint(char, i) {
       if (char === "O") {
@@ -45,7 +49,6 @@ export default function Cgpa() {
     }
 
     // let total_credit = [19, 18, 19, 23, 22, 24, 20, 15];
-    let total_subject = [8, 7, 8, 9, 9, 9, 8, 4];
 
     function cgpa_credit(n) {
       let sum = 0;
@@ -71,20 +74,23 @@ export default function Cgpa() {
       }
       console.log(sum, cgpa);
 
-      sgpalist[i] = sum / sgpa;
-      cgpalist[i] = cgpa / cgpa_credit(k);
+      Sgpalist[i] = (sum / sgpa).toFixed(3);
+      Cgpalist[i] = (cgpa / cgpa_credit(k)).toFixed(3);
+
+      setSgpalist(Sgpalist);
+      setCgpalist(Cgpalist);
     }
 
     // sgpalist[2] = 5.5;
     // console.log(sgpalist[2]);
     // console.log(grade);
     // console.log(points);
-    console.log(credit);
+    // console.log(credit);
     // console.log(score);
     // console.log(total_subject);
     // console.log(total_credit);
-    console.log(sgpalist);
-    console.log(cgpalist);
+    // console.log(Sgpalist);
+    // console.log(Cgpalist);
     // console.log(score.slice(23, 32));
     // console.log(credit.slice(23, 32));
   }
@@ -110,6 +116,8 @@ export default function Cgpa() {
 
   function logout() {
     navigate(`/`);
+    // alert("ok");
+    // document.querySelector("#subject1").value = "A";
   }
 
   // cgpa();
@@ -130,8 +138,37 @@ export default function Cgpa() {
       <div className="pb-5">
         <div className="first">
           <h1>Semester 1</h1>
-
           <div className="one">
+            Chemistry <nav>(18CH051):</nav>{" "}
+            <select onChange={cgpa} id="subject3">
+              <option>O</option>
+              <option>A+</option>
+              <option>A</option>
+              <option>B+</option>
+              <option>B</option>
+              <option>RA-F</option>
+            </select>
+            <br />
+            PST <nav>(18CS111):</nav>{" "}
+            <select onChange={cgpa} id="subject5">
+              <option>O</option>
+              <option>A+</option>
+              <option>A</option>
+              <option>B+</option>
+              <option>B</option>
+              <option>RA-F</option>
+            </select>
+            <br />
+            BEEE <nav>(18EE041):</nav>{" "}
+            <select onChange={cgpa} id="subject4">
+              <option>O</option>
+              <option>A+</option>
+              <option>A</option>
+              <option>B+</option>
+              <option>B</option>
+              <option>RA-F</option>
+            </select>
+            <br />
             English – I <nav>(18EN151):</nav>{" "}
             <select onChange={cgpa} id="subject1">
               <option>O</option>
@@ -152,28 +189,8 @@ export default function Cgpa() {
               <option>RA-F</option>
             </select>
             <br />
-            Chemistry <nav>(18CH051):</nav>{" "}
-            <select onChange={cgpa} id="subject3">
-              <option>O</option>
-              <option>A+</option>
-              <option>A</option>
-              <option>B+</option>
-              <option>B</option>
-              <option>RA-F</option>
-            </select>
-            <br />
-            BEEE <nav>(18EE041):</nav>{" "}
-            <select onChange={cgpa} id="subject4">
-              <option>O</option>
-              <option>A+</option>
-              <option>A</option>
-              <option>B+</option>
-              <option>B</option>
-              <option>RA-F</option>
-            </select>
-            <br />
-            PST <nav>(18CS111):</nav>{" "}
-            <select onChange={cgpa} id="subject5">
+            EG Lab <nav>(18AU027):</nav>{" "}
+            <select onChange={cgpa} id="subject8">
               <option>O</option>
               <option>A+</option>
               <option>A</option>
@@ -202,19 +219,10 @@ export default function Cgpa() {
               <option>RA-F</option>
             </select>
             <br />
-            EG Lab <nav>(18AU027):</nav>{" "}
-            <select onChange={cgpa} id="subject8">
-              <option>O</option>
-              <option>A+</option>
-              <option>A</option>
-              <option>B+</option>
-              <option>B</option>
-              <option>RA-F</option>
-            </select>
           </div>
 
-          <h2 id="Result1">SGPA : {sgpalist[1]} </h2>
-          <h2 id="cgpa0">CGPA : {cgpalist[1]} </h2>
+          <h2 id="Result1">SGPA : {sgpalist[0]} </h2>
+          <h2 id="cgpa0">CGPA : {cgpalist[0]} </h2>
         </div>
       </div>
 
@@ -222,6 +230,16 @@ export default function Cgpa() {
         <div className="second">
           <h1>Semester 2</h1>
           <div className="one">
+            C <nav>(18CS211):</nav>{" "}
+            <select onChange={cgpa} id="subject12">
+              <option>O</option>
+              <option>A+</option>
+              <option>A</option>
+              <option>B+</option>
+              <option>B</option>
+              <option>RA-F</option>
+            </select>
+            <br />
             ENGLISH - II <nav>(18EN251):</nav>{" "}
             <select onChange={cgpa} id="subject9">
               <option>O</option>
@@ -242,6 +260,16 @@ export default function Cgpa() {
               <option>RA-F</option>
             </select>
             <br />
+            EVS <nav>(18MC052):</nav>{" "}
+            <select onChange={cgpa} id="subject63">
+              <option>O</option>
+              <option>A+</option>
+              <option>A</option>
+              <option>B+</option>
+              <option>B</option>
+              <option>RA-F</option>
+            </select>
+            <br />
             PHYSICS <nav>(18PH043):</nav>{" "}
             <select onChange={cgpa} id="subject11">
               <option>O</option>
@@ -251,8 +279,8 @@ export default function Cgpa() {
               <option>B</option>
               <option>RA-F</option>
             </select>
-            <br />C <nav>(18CS211):</nav>{" "}
-            <select onChange={cgpa} id="subject12">
+            <br />C Lab <nav>(18CS221):</nav>{" "}
+            <select onChange={cgpa} id="subject15">
               <option>O</option>
               <option>A+</option>
               <option>A</option>
@@ -280,31 +308,12 @@ export default function Cgpa() {
               <option>B</option>
               <option>RA-F</option>
             </select>
-            <br />C Lab <nav>(18CS221):</nav>{" "}
-            <select onChange={cgpa} id="subject15">
-              <option>O</option>
-              <option>A+</option>
-              <option>A</option>
-              <option>B+</option>
-              <option>B</option>
-              <option>RA-F</option>
-            </select>
-            <br />
-            EVS <nav>(18MC052):</nav>{" "}
-            <select onChange={cgpa} id="subject63">
-              <option>O</option>
-              <option>A+</option>
-              <option>A</option>
-              <option>B+</option>
-              <option>B</option>
-              <option>RA-F</option>
-            </select>
             <br />
           </div>
 
-          <h2 id="Result2">SGPA : {sgpalist[2]} </h2>
+          <h2 id="Result2">SGPA : {sgpalist[1]} </h2>
 
-          <h2 id="cgpa1">CGPA : {cgpalist[2]} </h2>
+          <h2 id="cgpa1">CGPA : {cgpalist[1]} </h2>
         </div>
       </div>
 
@@ -312,36 +321,6 @@ export default function Cgpa() {
         <div className="third">
           <h1>Semester 3</h1>
           <div className="one">
-            LDDC <nav>(18EC332):</nav>
-            <select onChange={cgpa} id="subject16">
-              <option>O</option>
-              <option>A+</option>
-              <option>A</option>
-              <option>B+</option>
-              <option>B</option>
-              <option>RA-F</option>
-            </select>
-            <br />
-            NCT <nav>(18MA343):</nav>
-            <select onChange={cgpa} id="subject17">
-              <option>O</option>
-              <option>A+</option>
-              <option>A</option>
-              <option>B+</option>
-              <option>B</option>
-              <option>RA-F</option>
-            </select>
-            <br />
-            PYTHON Lab <nav>(18CS028):</nav>
-            <select onChange={cgpa} id="subject18">
-              <option>O</option>
-              <option>A+</option>
-              <option>A</option>
-              <option>B+</option>
-              <option>B</option>
-              <option>RA-F</option>
-            </select>
-            <br />
             PYTHON <nav>(18CS043):</nav>
             <select onChange={cgpa} id="subject19">
               <option>O</option>
@@ -372,6 +351,36 @@ export default function Cgpa() {
               <option>RA-F</option>
             </select>
             <br />
+            LDDC <nav>(18EC332):</nav>
+            <select onChange={cgpa} id="subject16">
+              <option>O</option>
+              <option>A+</option>
+              <option>A</option>
+              <option>B+</option>
+              <option>B</option>
+              <option>RA-F</option>
+            </select>
+            <br />
+            NCT <nav>(18MA343):</nav>
+            <select onChange={cgpa} id="subject17">
+              <option>O</option>
+              <option>A+</option>
+              <option>A</option>
+              <option>B+</option>
+              <option>B</option>
+              <option>RA-F</option>
+            </select>
+            <br />
+            PYTHON Lab <nav>(18CS028):</nav>
+            <select onChange={cgpa} id="subject18">
+              <option>O</option>
+              <option>A+</option>
+              <option>A</option>
+              <option>B+</option>
+              <option>B</option>
+              <option>RA-F</option>
+            </select>
+            <br />
             DATA STRUCTURES Lab <nav>(18CS321):</nav>
             <select onChange={cgpa} id="subject22">
               <option>O</option>
@@ -392,16 +401,6 @@ export default function Cgpa() {
               <option>RA-F</option>
             </select>
             <br />
-            COI <nav>(18MC051):</nav>{" "}
-            <select onChange={cgpa} id="subject64">
-              <option>O</option>
-              <option>A+</option>
-              <option>A</option>
-              <option>B+</option>
-              <option>B</option>
-              <option>RA-F</option>
-            </select>
-            <br />
             CDS - I <nav>(18HR351):</nav>{" "}
             <select onChange={cgpa} id="subject65">
               <option>O</option>
@@ -412,11 +411,21 @@ export default function Cgpa() {
               <option>RA-F</option>
             </select>
             <br />
+            COI <nav>(18MC051):</nav>{" "}
+            <select onChange={cgpa} id="subject64">
+              <option>O</option>
+              <option>A+</option>
+              <option>A</option>
+              <option>B+</option>
+              <option>B</option>
+              <option>RA-F</option>
+            </select>
+            <br />
           </div>
 
-          <h2 id="Result3">SGPA : {sgpalist[3]} </h2>
+          <h2 id="Result3">SGPA : {sgpalist[2]} </h2>
 
-          <h2 id="cgpa2">CGPA : {cgpalist[3]} </h2>
+          <h2 id="cgpa2">CGPA : {cgpalist[2]} </h2>
         </div>
       </div>
       <div className="pb-5">
@@ -443,8 +452,18 @@ export default function Cgpa() {
               <option>RA-F</option>
             </select>
             <br />
-            MP AND MC Lab <nav>(18EC425):</nav>
-            <select onChange={cgpa} id="subject26">
+            SE <nav>(18CS411):</nav>
+            <select onChange={cgpa} id="subject32">
+              <option>O</option>
+              <option>A+</option>
+              <option>A</option>
+              <option>B+</option>
+              <option>B</option>
+              <option>RA-F</option>
+            </select>
+            <br />
+            DAA <nav>(18CS412):</nav>
+            <select onChange={cgpa} id="subject30">
               <option>O</option>
               <option>A+</option>
               <option>A</option>
@@ -473,26 +492,6 @@ export default function Cgpa() {
               <option>RA-F</option>
             </select>
             <br />
-            OS Lab <nav>(18CS422):</nav>
-            <select onChange={cgpa} id="subject29">
-              <option>O</option>
-              <option>A+</option>
-              <option>A</option>
-              <option>B+</option>
-              <option>B</option>
-              <option>RA-F</option>
-            </select>
-            <br />
-            DAA <nav>(18CS412):</nav>
-            <select onChange={cgpa} id="subject30">
-              <option>O</option>
-              <option>A+</option>
-              <option>A</option>
-              <option>B+</option>
-              <option>B</option>
-              <option>RA-F</option>
-            </select>
-            <br />
             JP Lab <nav>(18CS421):</nav>
             <select onChange={cgpa} id="subject31">
               <option>O</option>
@@ -503,8 +502,18 @@ export default function Cgpa() {
               <option>RA-F</option>
             </select>
             <br />
-            SE <nav>(18CS411):</nav>
-            <select onChange={cgpa} id="subject32">
+            OS Lab <nav>(18CS422):</nav>
+            <select onChange={cgpa} id="subject29">
+              <option>O</option>
+              <option>A+</option>
+              <option>A</option>
+              <option>B+</option>
+              <option>B</option>
+              <option>RA-F</option>
+            </select>
+            <br />
+            MP AND MC Lab <nav>(18EC425):</nav>
+            <select onChange={cgpa} id="subject26">
               <option>O</option>
               <option>A+</option>
               <option>A</option>
@@ -525,9 +534,9 @@ export default function Cgpa() {
             <br />
           </div>
 
-          <h2 id="Result4">SGPA : {sgpalist[4]} </h2>
+          <h2 id="Result4">SGPA : {sgpalist[3]} </h2>
 
-          <h2 id="cgpa3">CGPA : {cgpalist[4]} </h2>
+          <h2 id="cgpa3">CGPA : {cgpalist[3]} </h2>
         </div>
       </div>
       <div className="pb-5">
@@ -636,9 +645,9 @@ export default function Cgpa() {
             <br />
           </div>
 
-          <h2 id="Result5">SGPA : {sgpalist[5]} </h2>
+          <h2 id="Result5">SGPA : {sgpalist[4]} </h2>
 
-          <h2 id="cgpa4">CGPA : {cgpalist[5]} </h2>
+          <h2 id="cgpa4">CGPA : {cgpalist[4]} </h2>
         </div>
       </div>
       <div className="pb-5">
@@ -747,9 +756,9 @@ export default function Cgpa() {
             <br />
           </div>
 
-          <h2 id="Result6">SGPA : {sgpalist[6]} </h2>
+          <h2 id="Result6">SGPA : {sgpalist[5]} </h2>
 
-          <h2 id="cgpa6">CGPA : {cgpalist[6]} </h2>
+          <h2 id="cgpa6">CGPA : {cgpalist[5]} </h2>
         </div>
       </div>
       <div className="pb-5">
@@ -838,9 +847,9 @@ export default function Cgpa() {
             <br />
           </div>
 
-          <h2 id="Result7">SGPA : {sgpalist[7]} </h2>
+          <h2 id="Result7">SGPA : {sgpalist[6]} </h2>
 
-          <h2 id="cgpa7">CGPA : {cgpalist[7]} </h2>
+          <h2 id="cgpa7">CGPA : {cgpalist[6]} </h2>
         </div>
       </div>
       <div className="pb-5">
@@ -889,9 +898,9 @@ export default function Cgpa() {
             <br />
           </div>
 
-          <h2 id="Result8">SGPA : {sgpalist[8]} </h2>
+          <h2 id="Result8">SGPA : {sgpalist[7]} </h2>
 
-          <h2 id="cgpa8">CGPA : {cgpalist[8]} </h2>
+          <h2 id="cgpa8">CGPA : {cgpalist[7]} </h2>
         </div>
       </div>
       <button

@@ -81,6 +81,7 @@ h1{
 @media (max-width: 676px) { 
     .right{
        position: absolute;
+       margin: 0;
     }
  }
 
