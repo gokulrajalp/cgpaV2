@@ -20,33 +20,9 @@ export default function Cgpa() {
   const usersCollectionRef = collection(db, "cgpa");
 
   const [users, setUsers] = useState([]);
-  // const [password, setPassword] = useState();
-  // const [error, setError] = useState();
 
-  useEffect(() => {
-    const getUsers = async () => {
-      const data = await getDocs(usersCollectionRef);
-
-      setUsers(data.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
-    };
-
-    getUsers();
-  }, []);
-
-  var regNo = localStorage.getItem("regNo");
-
-  function logout() {
-    // render();
-    navigate(`/`);
-    // alert("ok");
-    // document.querySelector("#subject1").value = "A";
-  }
-
-  let id = localStorage.getItem("id");
-
-  useEffect(() => {
+  function render() {
     users.forEach((users) => {
-      // alert("ok");
       if (id === users.id) {
         let grade = users.grade;
         let i = 1;
@@ -58,7 +34,27 @@ export default function Cgpa() {
         });
       }
     });
-  });
+  }
+
+  useEffect(() => {
+    const getUsers = async () => {
+      const data = await getDocs(usersCollectionRef);
+      setUsers(data.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
+    };
+    getUsers();
+  }, []);
+
+  useEffect(() => {
+    render();
+  }, [users]);
+
+  var regNo = localStorage.getItem("regNo");
+
+  function logout() {
+    navigate(`/`);
+  }
+
+  let id = localStorage.getItem("id");
 
   function cgpa() {
     let Cgpalist = [];
@@ -150,7 +146,9 @@ export default function Cgpa() {
         if (regNo === users.regNo) {
           let name = users.name;
           return (
-            <h2 className="text-primary text-center">Welcome {name} to</h2>
+            <h2 className="text-primary text-center" key="{users}">
+              Welcome {name} to
+            </h2>
           );
         }
       })}
