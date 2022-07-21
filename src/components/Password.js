@@ -29,6 +29,7 @@ export default function Signin() {
       if (key === users.regNo) {
         if (password === users.Password) {
           localStorage.setItem("id", users.id);
+
           navigate(`/cgpa`);
         } else {
           setError("This is not a valid password");
@@ -61,6 +62,17 @@ export default function Signin() {
           <button type="submit" class="btn btn-outline-success">
             Verify
           </button>
+        </div>
+        <div className="form-check">
+          <input
+            className="form-check-input"
+            type="checkbox"
+            value=""
+            id="flexCheckDefault"
+          />
+          <label class="form-check-label" for="flexCheckDefault">
+            Stay Signin in this devise
+          </label>
         </div>
       </form>
     </div>
