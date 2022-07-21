@@ -2,12 +2,63 @@ import React from "react";
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { db } from "../firebase-config";
-import { collection, getDocs, addDoc } from "firebase/firestore";
+import { collection, getDocs, updateDoc, doc } from "firebase/firestore";
 import "./glass.css";
 
 export default function Cgpa() {
   const [sgpalist, setSgpalist] = useState([]);
   const [cgpalist, setCgpalist] = useState([]);
+
+  const update = async (id, grade, sgpalist, cgpalist) => {
+    const userDoc = doc(db, "cgpa", id);
+    const newFields = { grade: grade, sgpalist: sgpalist, cgpalist: cgpalist };
+    await updateDoc(userDoc, newFields);
+  };
+
+  let navigate = useNavigate();
+
+  const usersCollectionRef = collection(db, "cgpa");
+
+  const [users, setUsers] = useState([]);
+  // const [password, setPassword] = useState();
+  // const [error, setError] = useState();
+
+  useEffect(() => {
+    const getUsers = async () => {
+      const data = await getDocs(usersCollectionRef);
+
+      setUsers(data.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
+    };
+
+    getUsers();
+  }, []);
+
+  var regNo = localStorage.getItem("regNo");
+
+  function logout() {
+    // render();
+    navigate(`/`);
+    // alert("ok");
+    // document.querySelector("#subject1").value = "A";
+  }
+
+  let id = localStorage.getItem("id");
+
+  useEffect(() => {
+    users.forEach((users) => {
+      // alert("ok");
+      if (id === users.id) {
+        let grade = users.grade;
+        let i = 1;
+        setCgpalist(users.cgpalist);
+        setSgpalist(users.sgpalist);
+        grade.forEach((element) => {
+          document.querySelector(`#subject${i}`).value = element;
+          i = i + 1;
+        });
+      }
+    });
+  });
 
   function cgpa() {
     let Cgpalist = [];
@@ -53,7 +104,7 @@ export default function Cgpa() {
       for (let i = 0; i < n; i++) {
         sum += credit[i];
       }
-      console.log(sum);
+      // console.log(sum);
       return sum;
     }
 
@@ -70,13 +121,14 @@ export default function Cgpa() {
         sgpa += credit[k];
         k = k + 1;
       }
-      console.log(sum, cgpa);
+      // console.log(sum, cgpa);
 
       Sgpalist[i] = (sum / sgpa).toFixed(3);
       Cgpalist[i] = (cgpa / cgpa_credit(k)).toFixed(3);
 
       setSgpalist(Sgpalist);
       setCgpalist(Cgpalist);
+      update(id, grade, Sgpalist, Cgpalist);
     }
 
     // console.log(points);
@@ -88,31 +140,6 @@ export default function Cgpa() {
     // console.log(Cgpalist);
     // console.log(score.slice(23, 32));
     // console.log(credit.slice(23, 32));
-  }
-
-  let navigate = useNavigate();
-
-  const usersCollectionRef = collection(db, "cgpa");
-  const [users, setUsers] = useState([]);
-  // const [password, setPassword] = useState();
-  // const [error, setError] = useState();
-
-  useEffect(() => {
-    const getUsers = async () => {
-      const data = await getDocs(usersCollectionRef);
-
-      setUsers(data.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
-    };
-
-    getUsers();
-  }, []);
-
-  var regNo = localStorage.getItem("regNo");
-
-  function logout() {
-    navigate(`/`);
-    // alert("ok");
-    // document.querySelector("#subject1").value = "A";
   }
 
   // cgpa();
