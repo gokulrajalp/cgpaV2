@@ -59,12 +59,12 @@ export default function Sign(){
 
            
           
-            
+            let grade =[];
 
 
             const usersCollectionRef = collection(db, "cgpa");
 const createusers = async () => {
-    await addDoc(usersCollectionRef, {name : name, Password:password, mail : mail, regNo: regNo});
+    await addDoc(usersCollectionRef, {name : name, Password:password, mail : mail, regNo: regNo, grade : grade});
 };
 
 createusers();

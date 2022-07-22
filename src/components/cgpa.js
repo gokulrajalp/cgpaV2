@@ -32,7 +32,7 @@ export default function Cgpa() {
         return 8;
       } else if (char === "B+") {
         return 7;
-      } else if (char === "B+") {
+      } else if (char === "B") {
         return 6;
       } else {
         credit[i] = 0;
@@ -128,7 +128,7 @@ export default function Cgpa() {
         }
       })}
 
-      <h1 className="head">CGPA Calculater</h1>
+      <h1 className="head">CGPA Calculator</h1>
 
       <div className="pb-5">
         <div className="first">
