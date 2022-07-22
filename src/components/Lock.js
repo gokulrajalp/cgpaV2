@@ -12,7 +12,14 @@ export default function Lock() {
   const [users, setUsers] = useState([]);
   const [regNo, setregNo] = useState();
 
+  function check() {
+    if (localStorage.getItem("authentication") === "true") {
+      navigate("/cgpa");
+    }
+  }
+
   useEffect(() => {
+    check();
     const getUsers = async () => {
       const data = await getDocs(usersCollectionRef);
 

@@ -63,7 +63,7 @@ export default function Signin() {
             Verify
           </button>
         </div>
-        <div className="form-check">
+        {/* <div className="form-check">
           <input
             className="form-check-input"
             type="checkbox"
@@ -73,7 +73,7 @@ export default function Signin() {
           <label class="form-check-label" for="flexCheckDefault">
             Stay Signin in this devise
           </label>
-        </div>
+        </div> */}
       </form>
     </div>
   );

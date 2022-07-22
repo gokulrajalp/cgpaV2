@@ -923,13 +923,14 @@ export default function Cgpa() {
           <h2 id="cgpa8">CGPA : {cgpalist[7]} </h2>
         </div>
       </div>
-      <button
+
+      {/* <button
         onClick={logout}
         className="btn btn-outline-success mt-3 me-3 right"
         type="submit"
       >
         Logout
-      </button>
+      </button> */}
     </div>
   );
 }
