@@ -2,12 +2,59 @@ import React from "react";
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { db } from "../firebase-config";
-import { collection, getDocs, addDoc } from "firebase/firestore";
+import { collection, getDocs, updateDoc, doc } from "firebase/firestore";
 import "./glass.css";
 
 export default function Cgpa() {
   const [sgpalist, setSgpalist] = useState([]);
   const [cgpalist, setCgpalist] = useState([]);
+
+  const update = async (id, grade, sgpalist, cgpalist) => {
+    const userDoc = doc(db, "cgpa", id);
+    const newFields = { grade: grade, sgpalist: sgpalist, cgpalist: cgpalist };
+    await updateDoc(userDoc, newFields);
+  };
+
+  let navigate = useNavigate();
+
+  const usersCollectionRef = collection(db, "cgpa");
+
+  const [users, setUsers] = useState([]);
+
+  function render() {
+    users.forEach((users) => {
+      if (id === users.id) {
+        let grade = users.grade;
+        let i = 1;
+        setCgpalist(users.cgpalist);
+        setSgpalist(users.sgpalist);
+        grade.forEach((element) => {
+          document.querySelector(`#subject${i}`).value = element;
+          i = i + 1;
+        });
+      }
+    });
+  }
+
+  useEffect(() => {
+    const getUsers = async () => {
+      const data = await getDocs(usersCollectionRef);
+      setUsers(data.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
+    };
+    getUsers();
+  }, []);
+
+  useEffect(() => {
+    render();
+  }, [users]);
+
+  var regNo = localStorage.getItem("regNo");
+
+  function logout() {
+    navigate(`/`);
+  }
+
+  let id = localStorage.getItem("id");
 
   function cgpa() {
     let Cgpalist = [];
@@ -53,7 +100,7 @@ export default function Cgpa() {
       for (let i = 0; i < n; i++) {
         sum += credit[i];
       }
-      console.log(sum);
+      // console.log(sum);
       return sum;
     }
 
@@ -70,13 +117,14 @@ export default function Cgpa() {
         sgpa += credit[k];
         k = k + 1;
       }
-      console.log(sum, cgpa);
+      // console.log(sum, cgpa);
 
       Sgpalist[i] = (sum / sgpa).toFixed(3);
       Cgpalist[i] = (cgpa / cgpa_credit(k)).toFixed(3);
 
       setSgpalist(Sgpalist);
       setCgpalist(Cgpalist);
+      update(id, grade, Sgpalist, Cgpalist);
     }
 
     // console.log(points);
@@ -90,31 +138,6 @@ export default function Cgpa() {
     // console.log(credit.slice(23, 32));
   }
 
-  let navigate = useNavigate();
-
-  const usersCollectionRef = collection(db, "cgpa");
-  const [users, setUsers] = useState([]);
-  // const [password, setPassword] = useState();
-  // const [error, setError] = useState();
-
-  useEffect(() => {
-    const getUsers = async () => {
-      const data = await getDocs(usersCollectionRef);
-
-      setUsers(data.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
-    };
-
-    getUsers();
-  }, []);
-
-  var regNo = localStorage.getItem("regNo");
-
-  function logout() {
-    navigate(`/`);
-    // alert("ok");
-    // document.querySelector("#subject1").value = "A";
-  }
-
   // cgpa();
 
   return (
@@ -123,7 +146,9 @@ export default function Cgpa() {
         if (regNo === users.regNo) {
           let name = users.name;
           return (
-            <h2 className="text-primary text-center">Welcome {name} to</h2>
+            <h2 className="text-primary text-center" key="{users}">
+              Welcome {name} to
+            </h2>
           );
         }
       })}
@@ -898,13 +923,14 @@ export default function Cgpa() {
           <h2 id="cgpa8">CGPA : {cgpalist[7]} </h2>
         </div>
       </div>
-      <button
+
+      {/* <button
         onClick={logout}
         className="btn btn-outline-success mt-3 me-3 right"
         type="submit"
       >
         Logout
-      </button>
+      </button> */}
     </div>
   );
 }
