@@ -3,7 +3,7 @@ import "./lock.css";
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { db } from "../firebase-config";
-import { collection, getDocs } from "firebase/firestore";
+import { collection, getDocs,  updateDoc, doc } from "firebase/firestore";
 
 export default function Lock() {
   let navigate = useNavigate();
@@ -12,14 +12,27 @@ export default function Lock() {
   const [users, setUsers] = useState([]);
   const [regNo, setregNo] = useState();
 
-  function check() {
-    if (localStorage.getItem("authentication") === "true") {
-      navigate("/cgpa");
+  function checking() {
+    
+    if (localStorage.getItem("authentication") === "true"){
+      let password = localStorage.getItem("cgpa_pwd");
+      let key = localStorage.getItem("regNo");
+   
+      users.forEach((users) => {
+        if (key === users.regNo) {
+          if (password === users.Password) {
+            localStorage.setItem("signin_page","false");
+            localStorage.setItem("password_page","false");
+            localStorage.setItem("cgpa_page","true");
+            const userDoc = doc(db, "cgpa", users.id);
+            const newFields = { cgpa_page: true };
+            updateDoc(userDoc, newFields);
+            navigate(`/cgpa`);
+          }}});
     }
   }
 
   useEffect(() => {
-    check();
     const getUsers = async () => {
       const data = await getDocs(usersCollectionRef);
 
@@ -28,6 +41,16 @@ export default function Lock() {
 
     getUsers();
   }, []);
+
+
+  useEffect(() => {
+    checking();
+  }, [users]);
+
+
+
+
+
 
   function verify() {
     var check = false;
@@ -39,9 +62,11 @@ export default function Lock() {
     });
 
     if (check) {
+      localStorage.setItem("password_page","true");
       navigate("/password");
     } else {
       localStorage.setItem("regNo", regNo);
+      localStorage.setItem("signin_page","true");
       navigate("/signin");
     }
   }

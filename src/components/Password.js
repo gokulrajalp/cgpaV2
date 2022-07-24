@@ -2,7 +2,7 @@ import React from "react";
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { db } from "../firebase-config";
-import { collection, getDocs } from "firebase/firestore";
+import { collection, getDocs,  updateDoc, doc } from "firebase/firestore";
 import "./Password.css";
 
 export default function Signin() {
@@ -14,13 +14,17 @@ export default function Signin() {
   const [error, setError] = useState();
 
   useEffect(() => {
-    const getUsers = async () => {
+    if(localStorage.getItem("password_page")==="true"){
+      const getUsers = async () => {
       const data = await getDocs(usersCollectionRef);
 
       setUsers(data.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
     };
 
     getUsers();
+     }else{
+      navigate('/');
+  }
   }, []);
 
   function verify() {
@@ -29,7 +33,12 @@ export default function Signin() {
       if (key === users.regNo) {
         if (password === users.Password) {
           localStorage.setItem("id", users.id);
-
+          localStorage.setItem("cgpa_pwd", users.Password);
+          localStorage.setItem("password_page","false");
+          localStorage.setItem("cgpa_page","true");
+            const userDoc = doc(db, "cgpa", users.id);
+            const newFields = { cgpa_page: true };
+            updateDoc(userDoc, newFields);
           navigate(`/cgpa`);
         } else {
           setError("This is not a valid password");

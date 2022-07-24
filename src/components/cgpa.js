@@ -9,21 +9,25 @@ export default function Cgpa() {
   const [sgpalist, setSgpalist] = useState([]);
   const [cgpalist, setCgpalist] = useState([]);
 
-  const update = async (id, grade, sgpalist, cgpalist) => {
-    const userDoc = doc(db, "cgpa", id);
-    const newFields = { grade: grade, sgpalist: sgpalist, cgpalist: cgpalist };
-    await updateDoc(userDoc, newFields);
-  };
+  // function update()= async (id, grade, sgpalist, cgpalist) => {
+  //   const userDoc = doc(db, "cgpa", id);
+  //   const newFields = { grade: grade, sgpalist: sgpalist, cgpalist: cgpalist };
+  //   await updateDoc(userDoc, newFields);
+  // };
 
   let navigate = useNavigate();
 
   const usersCollectionRef = collection(db, "cgpa");
 
   const [users, setUsers] = useState([]);
+  const [modify, setModify] = useState(false);
 
   function render() {
     users.forEach((users) => {
       if (id === users.id) {
+        if(!users.cgpa_page){
+          navigate(`/`);
+        }
         let grade = users.grade;
         let i = 1;
         setCgpalist(users.cgpalist);
@@ -36,27 +40,59 @@ export default function Cgpa() {
     });
   }
 
+// function checking(){
+//             let id = localStorage.getItem("id");
+//             const userDoc = doc(db, "cgpa", id);
+//             const newFields = { cgpa_page: true };
+//             updateDoc(userDoc, newFields);
+// }
+
+
   useEffect(() => {
-    const getUsers = async () => {
+    if(localStorage.getItem("cgpa_page")==="true"){
+      
+     const getUsers = async () => {
       const data = await getDocs(usersCollectionRef);
-      setUsers(data.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
-    };
+      setUsers(data.docs.map((doc) => ({ ...doc.data(), id: doc.id })));   
+     }; 
     getUsers();
+     }else{
+      navigate('/');
+     }
+    
   }, []);
 
   useEffect(() => {
     render();
   }, [users]);
 
-  var regNo = localStorage.getItem("regNo");
+  let regNo = localStorage.getItem("regNo");
 
-  function logout() {
-    navigate(`/`);
-  }
+
 
   let id = localStorage.getItem("id");
-
+ 
   function cgpa() {
+    
+
+    if(!modify){
+    let password = prompt("Enter your Password to make any changes");
+
+    users.map((users) => {
+      if (regNo === users.regNo) {
+        if(password===users.Password){
+          setModify(true);
+        }
+        else{
+          alert("Password is wrong try again");
+          window.location.reload(false);
+        }
+      }
+    })
+  }
+
+  if(modify){
+
     let Cgpalist = [];
     let Sgpalist = [];
     let grade = [];
@@ -124,7 +160,10 @@ export default function Cgpa() {
 
       setSgpalist(Sgpalist);
       setCgpalist(Cgpalist);
-      update(id, grade, Sgpalist, Cgpalist);
+      // update(id, grade, Sgpalist, Cgpalist);
+    const userDoc = doc(db, "cgpa", id);
+    const newFields = { grade: grade, sgpalist: Sgpalist, cgpalist: Cgpalist };
+    updateDoc(userDoc, newFields);
     }
 
     // console.log(points);
@@ -137,6 +176,24 @@ export default function Cgpa() {
     // console.log(score.slice(23, 32));
     // console.log(credit.slice(23, 32));
   }
+  }
+
+ function save(){
+  localStorage.setItem("authentication","true");
+  navigate(`/`);
+ }
+ 
+ function clear(){
+  localStorage.setItem("authentication","false");
+  localStorage.setItem("cgpa_page","false");
+  localStorage.clear();
+  const userDoc = doc(db, "cgpa", id);
+  const newFields = { cgpa_page: false };
+  updateDoc(userDoc, newFields);
+  navigate(`/`);
+}
+
+
 
   // cgpa();
 
@@ -931,6 +988,29 @@ export default function Cgpa() {
       >
         Logout
       </button> */}
+
+<button type="button" class="btn btn-danger right" data-bs-toggle="modal" data-bs-target="#exampleModal">
+<span className='icon'></span>
+</button>
+
+
+<div className="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div className="modal-dialog">
+    <div className="modal-content">
+      <div className="modal-header">
+        <h5 className="modal-title" id="exampleModalLabel">Logout</h5>
+        <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div className="modal-body">
+        <button type="button" className="btn btn-success" onClick={save} data-bs-dismiss="modal">Stay sigin in this devise</button>
+        <button type="button" className="btn btn-danger float-end" onClick={clear} data-bs-dismiss="modal">Ask password everytime</button>
+      </div>
+      
+    </div>
+  </div>
+</div>
+
+
     </div>
   );
 }

@@ -1,5 +1,5 @@
 import React from "react";
-import { useState } from "react";
+import { useState, useEffect} from "react";
 import { useNavigate } from "react-router-dom";
 import { db } from "../firebase-config";
 import { collection, addDoc } from "firebase/firestore";
@@ -15,6 +15,20 @@ export default function Sign() {
   const [regNo] = useState(localStorage.getItem(`regNo`));
 
   let navigate = useNavigate();
+
+
+  useEffect(() => {
+   if(localStorage.getItem("signin_page")==="true"){
+    alert("Enter all the details and submit");
+   }else{
+    navigate(`/`);
+   }
+  }, []);
+
+
+
+
+  
   function remove() {
     localStorage.removeItem(`${localStorage.getItem("current")}`);
     navigate("/");
@@ -50,11 +64,13 @@ export default function Sign() {
         grade: grade,
         sgpalist: sgpalist,
         cgpalist: cgpalist,
+        cgpa_page: false,
       });
     };
 
     createusers();
-
+    localStorage.setItem("password_page","true");
+    localStorage.setItem("signin_page","false");
     navigate("/password");
   }
 
