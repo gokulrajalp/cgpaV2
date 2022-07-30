@@ -1,5 +1,6 @@
 import React from "react";
-import "./lock.css";
+// import "./lock.css";
+import "./CSS.css";
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { db } from "../firebase-config";
@@ -48,7 +49,20 @@ export default function Lock() {
   }, [users]);
 
 
-
+  
+  
+ function mood() {
+      document.querySelector(".drak-light").classList.toggle("active");
+      document.querySelector("body").classList.toggle("dark");
+      // if(!document.querySelector("body").classList.contains("dark"))
+      // {
+      //     localStorage.setItem("mode", "light-mode");
+      // }
+      // else
+      // {
+      //     localStorage.setItem("mode", "dark-mode");
+      // }  
+  };
 
 
 
@@ -70,39 +84,42 @@ export default function Lock() {
       navigate("/signin");
     }
   }
-
   return (
-    <html>
-      <body>
-        <div className="container">
-          <h1 className="h1">CGPA CALCULATER</h1>
-          <div className="align">
-            <form onSubmit={verify}>
-              <div className="input-group mb-3">
-                <div className="input-group-prepend">
-                  <span id="basic-addon1">Enter your Register Number</span>
-                </div>
-                <input
-                  type="number"
-                  id="regNo"
-                  name="fname"
-                  onChange={(e) => {
-                    setregNo(e.target.value);
-                  }}
-                ></input>
-              </div>
-              <br />
-              <button type="submit" class="btn btn-outline-success">
-                Verify
-              </button>
-            </form>
-          </div>
-        </div>
 
-        {/* {users.map((users)=>{
-    return <div><h1>name : {users.regNo}</h1><h1>type : {users.mail}</h1><h1>{regNo} = {users.regNo}</h1></div>
-})} */}
-      </body>
-    </html>
+<div className="rootDiv">
+ <div class="content">
+      <div class="text">WELCOME</div>
+
+      <form onSubmit={verify}>
+          <div class="field">
+              <span class="bx bxs-user"></span>
+              <input placeholder="Register Number"  type="number" id="regNo" name="fname" onChange={(e) => {setregNo(e.target.value);}} required/>
+          </div>
+
+       
+
+        <button className="button1" type="submit">Verify</button>
+
+        
+
+        
+
+      </form>
+      
+      <div class="drak-light" onClick={mood}>
+          <i class="bx bx-moon moon"></i>
+          <i class="bx bx-sun sun"></i>
+      </div>
+  </div>
+
+
+  </div>
+
+
+
+//         {/* {users.map((users)=>{
+//     return <div><h1>name : {users.regNo}</h1><h1>type : {users.mail}</h1><h1>{regNo} = {users.regNo}</h1></div>
+// })} */}
+
   );
 }
