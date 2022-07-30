@@ -96,7 +96,7 @@ body
   box-shadow: var(--boxShadow);
   border-radius: 32px;
   padding: 60px 45px;
-  margin-top: 45px;
+  margin-top: 10%;
 }
 .content .text
 {
