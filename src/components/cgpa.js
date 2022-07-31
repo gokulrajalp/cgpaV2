@@ -6,14 +6,11 @@ import { collection, getDocs, updateDoc, doc } from "firebase/firestore";
 import "./glass.css";
 
 export default function Cgpa() {
+
   const [sgpalist, setSgpalist] = useState([]);
   const [cgpalist, setCgpalist] = useState([]);
 
-  // function update()= async (id, grade, sgpalist, cgpalist) => {
-  //   const userDoc = doc(db, "cgpa", id);
-  //   const newFields = { grade: grade, sgpalist: sgpalist, cgpalist: cgpalist };
-  //   await updateDoc(userDoc, newFields);
-  // };
+
 
   let navigate = useNavigate();
 
@@ -21,11 +18,13 @@ export default function Cgpa() {
 
   const [users, setUsers] = useState([]);
   const [modify, setModify] = useState(false);
+  const [temp, setTemp] = useState();
 
   function render() {
     users.forEach((users) => {
       if (id === users.id) {
         if(!users.cgpa_page){
+        
           navigate(`/`);
         }
         let grade = users.grade;
@@ -40,12 +39,6 @@ export default function Cgpa() {
     });
   }
 
-// function checking(){
-//             let id = localStorage.getItem("id");
-//             const userDoc = doc(db, "cgpa", id);
-//             const newFields = { cgpa_page: true };
-//             updateDoc(userDoc, newFields);
-// }
 
 
   useEffect(() => {
@@ -57,6 +50,7 @@ export default function Cgpa() {
      }; 
     getUsers();
      }else{
+
       navigate('/');
      }
     
@@ -66,8 +60,14 @@ export default function Cgpa() {
     render();
   }, [users]);
 
-  let regNo = localStorage.getItem("regNo");
+  useEffect(() => {
+    if(modify){
+        cgpa();
+    }
+  
+  }, [temp]);
 
+  let regNo = localStorage.getItem("regNo");
 
 
   let id = localStorage.getItem("id");
@@ -82,6 +82,7 @@ export default function Cgpa() {
       if (regNo === users.regNo) {
         if(password===users.Password){
           setModify(true);
+          setTemp(true);
         }
         else{
           alert("Password is wrong try again");
@@ -90,8 +91,10 @@ export default function Cgpa() {
       }
     })
   }
+ 
 
   if(modify){
+  
 
     let Cgpalist = [];
     let Sgpalist = [];
@@ -136,7 +139,6 @@ export default function Cgpa() {
       for (let i = 0; i < n; i++) {
         sum += credit[i];
       }
-      // console.log(sum);
       return sum;
     }
 
@@ -153,14 +155,12 @@ export default function Cgpa() {
         sgpa += credit[k];
         k = k + 1;
       }
-      // console.log(sum, cgpa);
 
       Sgpalist[i] = (sum / sgpa).toFixed(3);
       Cgpalist[i] = (cgpa / cgpa_credit(k)).toFixed(3);
 
       setSgpalist(Sgpalist);
       setCgpalist(Cgpalist);
-      // update(id, grade, Sgpalist, Cgpalist);
     const userDoc = doc(db, "cgpa", id);
     const newFields = { grade: grade, sgpalist: Sgpalist, cgpalist: Cgpalist };
     updateDoc(userDoc, newFields);
@@ -184,8 +184,6 @@ export default function Cgpa() {
  }
  
  function clear(){
-  localStorage.setItem("authentication","false");
-  localStorage.setItem("cgpa_page","false");
   localStorage.clear();
   const userDoc = doc(db, "cgpa", id);
   const newFields = { cgpa_page: false };
@@ -195,7 +193,6 @@ export default function Cgpa() {
 
 
 
-  // cgpa();
 
   return (
     <div className="cgpa">

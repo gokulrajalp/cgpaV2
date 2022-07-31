@@ -1,5 +1,4 @@
 import React from "react";
-// import "./lock.css";
 import "./CSS.css";
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
@@ -54,14 +53,14 @@ export default function Lock() {
  function mood() {
       document.querySelector(".drak-light").classList.toggle("active");
       document.querySelector("body").classList.toggle("dark");
-      // if(!document.querySelector("body").classList.contains("dark"))
-      // {
-      //     localStorage.setItem("mode", "light-mode");
-      // }
-      // else
-      // {
-      //     localStorage.setItem("mode", "dark-mode");
-      // }  
+      if(!document.querySelector("body").classList.contains("dark"))
+      {
+          localStorage.setItem("mode", "light-mode");
+      }
+      else
+      {
+          localStorage.setItem("mode", "dark-mode");
+      }  
   };
 
 
@@ -96,13 +95,7 @@ export default function Lock() {
               <input placeholder="Register Number"  type="number" id="regNo" name="fname" onChange={(e) => {setregNo(e.target.value);}} required/>
           </div>
 
-       
-
         <button className="button1" type="submit">Verify</button>
-
-        
-
-        
 
       </form>
       
@@ -111,7 +104,6 @@ export default function Lock() {
           <i class="bx bx-sun sun"></i>
       </div>
   </div>
-
 
   </div>
 

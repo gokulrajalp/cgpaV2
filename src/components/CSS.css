@@ -96,7 +96,7 @@ body
   box-shadow: var(--boxShadow);
   border-radius: 32px;
   padding: 60px 45px;
-  margin-top: 10%;
+  margin-top: 45px;
 }
 .content .text
 {
@@ -105,6 +105,16 @@ body
   margin-bottom: 35px;
   color: var(--color);
 }
+
+.content .text_error
+{
+  font-size: 18px;
+  font-weight: 600;
+  margin-bottom: 35px;
+  color: red;
+}
+
+
 .content .field
 {
   height: 50px;
@@ -139,6 +149,14 @@ input:focus
   margin-top: 20px;
 }
 .field:nth-child(3)
+{
+  margin-top: 20px;
+}
+.field:nth-child(4)
+{
+  margin-top: 20px;
+}
+.field:nth-child(5)
 {
   margin-top: 20px;
 }

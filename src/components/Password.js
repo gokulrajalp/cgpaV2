@@ -3,7 +3,8 @@ import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { db } from "../firebase-config";
 import { collection, getDocs,  updateDoc, doc } from "firebase/firestore";
-import "./Password.css";
+import "./CSS.css";
+
 
 export default function Signin() {
   let navigate = useNavigate();
@@ -12,6 +13,7 @@ export default function Signin() {
   const [users, setUsers] = useState([]);
   const [password, setPassword] = useState();
   const [error, setError] = useState();
+  const [check, setCheck] = useState(false);
 
   useEffect(() => {
     if(localStorage.getItem("password_page")==="true"){
@@ -39,7 +41,7 @@ export default function Signin() {
             const userDoc = doc(db, "cgpa", users.id);
             const newFields = { cgpa_page: true };
             updateDoc(userDoc, newFields);
-          navigate(`/cgpa`);
+            setCheck(true);
         } else {
           setError("This is not a valid password");
         }
@@ -47,43 +49,52 @@ export default function Signin() {
     });
   }
 
+  useEffect(() => {
+    if(check){
+      navigate(`/cgpa`);
+    }
+  }, [check]);
+
+  function mood() {
+    document.querySelector(".drak-light").classList.toggle("active");
+    document.querySelector("body").classList.toggle("dark");
+    if(!document.querySelector("body").classList.contains("dark"))
+    {
+        localStorage.setItem("mode", "light-mode");
+    }
+    else
+    {
+        localStorage.setItem("mode", "dark-mode");
+    }  
+};
+
   return (
-    <div>
+
+<div className="rootDiv">
+ <div class="content">
+      <div class="text">WELCOME</div>
+      <div class="text"> {localStorage.getItem(`regNo`)} </div>
+
       <form onSubmit={verify}>
-        <div class="msg">
-          <p id="greet">Welcome</p>
-          <p id="user_name"> {localStorage.getItem(`regNo`)} </p>
-        </div>
-        <div class="pwd">
-          <h1 class="h11">Enter your Password</h1>
-          <div class="container"></div>
-          <input
-            id="pass"
-            className="password form-control"
-            type="password"
-            placeholder="password"
-            onChange={(e) => {
-              setPassword(e.target.value);
-            }}
-          ></input>
-          <p>{error}</p>
-          <br></br>
-          <button type="submit" class="btn btn-outline-success">
-            Verify
-          </button>
-        </div>
-        {/* <div className="form-check">
-          <input
-            className="form-check-input"
-            type="checkbox"
-            value=""
-            id="flexCheckDefault"
-          />
-          <label class="form-check-label" for="flexCheckDefault">
-            Stay Signin in this devise
-          </label>
-        </div> */}
+          <div class="field">
+              <span class="bx bxs-user"></span>
+              <input placeholder="Password" type='password' onChange={(e) => {setPassword(e.target.value);}} required/>
+          </div>
+
+        <button className="button1" type="submit">Verify</button>
+        <p className="text_error">{error}</p>
+
       </form>
-    </div>
+      
+      <div class="drak-light" onClick={mood}>
+          <i class="bx bx-moon moon"></i>
+          <i class="bx bx-sun sun"></i>
+      </div>
+  </div>
+
+  </div>
+
+
+
   );
 }

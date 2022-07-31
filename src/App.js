@@ -14,7 +14,6 @@ function App() {
         <Route path='/signin' element={<Signin/>}/>
         <Route path='/password' element={<Password/>}/>
         <Route path='/cgpa' element={<Cgpa/>}/>
-
       </Routes>
     </Router>
   );
