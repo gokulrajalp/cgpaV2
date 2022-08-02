@@ -49,6 +49,13 @@ export default function Signin() {
     });
   }
 
+
+function forget(){
+  window.location.replace(`https://wa.me/919659245977?text=Hi_Gokulraja_My_Register_Number_Is_${localStorage.getItem("regNo")}_Send_Me_The_Password`);
+}
+
+
+
   useEffect(() => {
     if(check){
       navigate(`/cgpa`);
@@ -77,12 +84,14 @@ export default function Signin() {
 
       <form onSubmit={verify}>
           <div class="field">
-              <span class="bx bxs-user"></span>
+              <span class="bx bxs-key"></span>
               <input placeholder="Password" type='password' onChange={(e) => {setPassword(e.target.value);}} required/>
           </div>
 
         <button className="button1" type="submit">Verify</button>
         <p className="text_error">{error}</p>
+        <p className="text_error" onClick={forget}>Forget Password ?</p>
+        
 
       </form>
       

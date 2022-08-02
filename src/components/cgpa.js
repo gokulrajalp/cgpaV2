@@ -22,9 +22,12 @@ export default function Cgpa() {
 
   function render() {
     users.forEach((users) => {
-      if (id === users.id) {
+      if (localStorage.getItem("id") === users.id) {
+        // alert(localStorage.getItem("cgpa_pwd"));
+        // alert(users.Password);
+        // alert(localStorage.getItem("cgpa_pwd")===users.Password);
+        if(localStorage.getItem("cgpa_pwd")===users.Password && localStorage.getItem("regNo")===users.regNo){
         if(!users.cgpa_page){
-        
           navigate(`/`);
         }
         let grade = users.grade;
@@ -35,7 +38,10 @@ export default function Cgpa() {
           document.querySelector(`#subject${i}`).value = element;
           i = i + 1;
         });
+      }else{
+        navigate(`/`);
       }
+    }
     });
   }
 
@@ -72,6 +78,12 @@ export default function Cgpa() {
 
   let id = localStorage.getItem("id");
  
+  function print(){
+    window.print();
+  }
+
+
+
   function cgpa() {
     
 
@@ -985,6 +997,11 @@ export default function Cgpa() {
       >
         Logout
       </button> */}
+
+
+<button onClick={print} class="btn btn-info bottom"><span className='icon-print'></span></button>
+
+
 
 <button type="button" class="btn btn-danger right" data-bs-toggle="modal" data-bs-target="#exampleModal">
 <span className='icon'></span>

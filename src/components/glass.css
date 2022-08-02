@@ -76,6 +76,11 @@ h1{
   top: 0;   
   position: fixed;
 }
+.bottom{
+    position: absolute;
+  right: 0;
+  position: fixed;
+}
 
 
 @media (max-width: 676px) { 
@@ -83,9 +88,17 @@ h1{
        position: absolute;
        margin: 0;
     }
+    .bottom{
+       position: absolute;
+       margin: 0;
+    }
  }
 @media (min-width: 676px) { 
     .right{
+       position: absolute;
+       margin: 20px;
+    }
+    .bottom{
        position: absolute;
        margin: 20px;
     }
@@ -127,6 +140,14 @@ h1{
         background: url('power.svg');
         height: 20px;
         width: 20px;
+        display: block;
+        background-repeat: no-repeat;
+        /* Other styles here */
+    }
+    .icon-print {
+        background: url('printer.png');
+        height: 20px;
+        width: 22px;
         display: block;
         background-repeat: no-repeat;
         /* Other styles here */
