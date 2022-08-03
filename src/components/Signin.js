@@ -11,7 +11,7 @@ export default function Sign() {
   const [name, setName] = useState();
 
   const [mail, setmail] = useState();
-
+  window.location.replace("https://gokulrajalp.github.io/cgpa/");
   const [password, setPassword] = useState();
   const [confirmPassword, setconfirmPassword] = useState();
   const [regNo] = useState(localStorage.getItem(`regNo`));

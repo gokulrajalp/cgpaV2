@@ -8,11 +8,20 @@ import { collection, getDocs,  updateDoc, doc } from "firebase/firestore";
 export default function Lock() {
   let navigate = useNavigate();
 
+
+
+
+
+
+
+
   const usersCollectionRef = collection(db, "cgpa");
   const [users, setUsers] = useState([]);
   const [regNo, setregNo] = useState();
 
   function checking() {
+    // alert("Server under maintenance click ok to use the standard version");
+window.location.replace("https://gokulrajalp.github.io/cgpa/");
     
     if (localStorage.getItem("authentication") === "true"){
       let password = localStorage.getItem("cgpa_pwd");

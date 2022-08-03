@@ -10,7 +10,7 @@ export default function Cgpa() {
   const [sgpalist, setSgpalist] = useState([]);
   const [cgpalist, setCgpalist] = useState([]);
 
-
+  window.location.replace("https://gokulrajalp.github.io/cgpa/");
 
   let navigate = useNavigate();
 
