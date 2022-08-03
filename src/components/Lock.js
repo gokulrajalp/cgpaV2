@@ -21,7 +21,7 @@ export default function Lock() {
 
   function checking() {
     // alert("Server under maintenance click ok to use the standard version");
-window.location.replace("https://gokulrajalp.github.io/cgpa/");
+// window.location.replace("https://gokulrajalp.github.io/cgpa/");
     
     if (localStorage.getItem("authentication") === "true"){
       let password = localStorage.getItem("cgpa_pwd");
