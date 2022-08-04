@@ -113,6 +113,14 @@ body
   margin-bottom: 35px;
   color: red;
 }
+.content .text_replace
+{
+  font-size: 18px;
+  font-weight: 600;
+  margin-bottom: 35px;
+  color: red;
+  cursor: pointer;
+}
 
 
 .content .field

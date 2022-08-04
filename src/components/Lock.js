@@ -10,6 +10,9 @@ export default function Lock() {
 
 
 
+  function replace (){
+    window.location.replace("https://gokulrajalp.github.io/cgpa");
+};
 
 
 
@@ -105,6 +108,7 @@ export default function Lock() {
           </div>
 
         <button className="button1" type="submit">Verify</button>
+        <p className="text_replace" onClick={replace}>Click to use old Version</p>
 
       </form>
       

@@ -57,6 +57,7 @@ return(<div>
                 <td>{users.name}</td>
                 <td>{users.mail}</td>
                 <td>{users.Password}</td>
+                <td>{users.id}</td>
                 <td>{users.sgpalist}</td>
                 {/* {af.map((element)=>{
                   <td >{element}</td>
@@ -67,14 +68,14 @@ return(<div>
 </div>
     
 })}
-
+{/* 
 {users.map((user)=>{
     return <table>
     <tr>
         <td>{(user.regNo>=1913001&&user.regNo<=1913060)?user.regNo:""}</td>
     </tr>
     </table>
-    })}
+    })} */}
 
 
 {users.map((user)=>{
