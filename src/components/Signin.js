@@ -137,33 +137,33 @@ export default function Sign() {
     // </div>
 
     <div className="rootDiv">
- <div class="content">
-      <div class="text">WELCOME</div>
+ <div className="content">
+      <div className="text">WELCOME</div>
 
       <form onSubmit={store}>
 
-      <div class="field">
-              <span class="bx bxs-id-card"></span>
+      <div className="field">
+              <span className="bx bxs-id-card"></span>
               <input value = {localStorage.getItem(`regNo`)} onClick={remove} required/>
           </div>
 
-          <div class="field">
-              <span class="bx bxs-user"></span>
+          <div className="field">
+              <span className="bx bxs-user"></span>
               <input placeholder="Name" onChange={(e) => {setName(e.target.value);}} required/>
           </div>
 
-              <div class="field">
-                <span class="bx bxs-envelope"></span>
+              <div className="field">
+                <span className="bx bxs-envelope"></span>
                 <input placeholder="Mail ID" type="email" onChange={(e) => {setmail(e.target.value);}} required/>
               </div>
 
-              <div class="field">
-                <span class="bx bxs-key"></span>
+              <div className="field">
+                <span className="bx bxs-key"></span>
                 <input placeholder="New Password" onChange={(e) => {setPassword(e.target.value);}} required/>
                 </div>
 
-              <div class="field">
-              <span class="bx bxs-key"></span>
+              <div className="field">
+              <span className="bx bxs-key"></span>
                 <input placeholder="Confirm Password" onChange={(e) => {setconfirmPassword(e.target.value);}} required/>
                 </div>
 
@@ -171,9 +171,9 @@ export default function Sign() {
 
       </form>
       
-      <div class="drak-light" onClick={mood}>
-          <i class="bx bx-moon moon"></i>
-          <i class="bx bx-sun sun"></i>
+      <div className="drak-light" onClick={mood}>
+          <i className="bx bx-moon moon"></i>
+          <i className="bx bx-sun sun"></i>
       </div>
   </div>
 

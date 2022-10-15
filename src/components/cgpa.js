@@ -2,26 +2,47 @@ import React from "react";
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { db } from "../firebase-config";
-import { collection, getDocs, updateDoc, doc } from "firebase/firestore";
+import { updateDoc, doc } from "firebase/firestore";
 import "./glass.css";
+import { useAuth } from "./Data";
+
 
 export default function Cgpa() {
-
+let Data=useAuth(); 
   const [sgpalist, setSgpalist] = useState([]);
   const [cgpalist, setCgpalist] = useState([]);
 
-  // window.location.replace("https://gokulrajalp.github.io/cgpa/");
+
+  const [num, setNum] = useState(0);
+
+
+  let elective = [{title:"Professional Elective – I"},
+  {title:"Professional Elective – II"},
+  {title:"Professional Elective – III"},
+  {title:"Open Elective – I"},
+  {title:"Professional Elective – IV"},
+  {title:"Open Elective – II"}]
+
+  let electivesub = [["Open Source Technologies - 18CS563", "Data Warehousing and Data Mining - 18CS564"],
+  ["Object Oriented Analysis and Design - 18CS662", "Machine Learning Techniques - 18CS665"],
+  ["Green Computing - 18CS667", "Ad hoc and Sensor Networks - 18CS669"],
+  ["Agile Software Development - 18CS666", ".Net Framework Technologies - 18CS091"],
+  ["IBM"],
+  ["High Speed Networks - 18CS763", "Business Intelligence - 18CS766"]]
+
+
+ 
 
   let navigate = useNavigate();
 
-  const usersCollectionRef = collection(db, "cgpa");
+  // const usersCollectionRef = collection(db, "cgpa");
 
-  const [users, setUsers] = useState([]);
+  // const [users, setUsers] = useState([]);
   const [modify, setModify] = useState(false);
   const [temp, setTemp] = useState();
 
   function render() {
-    users.forEach((users) => {
+    Data.users.forEach((users) => {
       if (localStorage.getItem("id") === users.id) {
         // alert(localStorage.getItem("cgpa_pwd"));
         // alert(users.Password);
@@ -48,23 +69,11 @@ export default function Cgpa() {
 
 
   useEffect(() => {
-    if(localStorage.getItem("cgpa_page")==="true"){
-      
-     const getUsers = async () => {
-      const data = await getDocs(usersCollectionRef);
-      setUsers(data.docs.map((doc) => ({ ...doc.data(), id: doc.id })));   
-     }; 
-    getUsers();
-     }else{
-
+    if(localStorage.getItem("cgpa_page")!="true"){
       navigate('/');
      }
-    
   }, []);
 
-  useEffect(() => {
-    render();
-  }, [users]);
 
   useEffect(() => {
     if(modify){
@@ -72,6 +81,11 @@ export default function Cgpa() {
     }
   
   }, [temp]);
+
+  useEffect(() => {
+    render();
+  
+  }, [Data.users]);
 
   let regNo = localStorage.getItem("regNo");
 
@@ -90,7 +104,7 @@ export default function Cgpa() {
     if(!modify){
     let password = prompt("Enter your Password to make any changes");
 
-    users.map((users) => {
+    Data.users.map((users) => {
       if (regNo === users.regNo) {
         if(password===users.Password){
           setModify(true);
@@ -208,7 +222,7 @@ export default function Cgpa() {
 
   return (
     <div className="cgpa">
-      {users.map((users) => {
+      {Data.users.map((users) => {
         if (regNo === users.regNo) {
           let name = users.name;
           return (
@@ -326,7 +340,7 @@ export default function Cgpa() {
               <option>RA-F</option>
             </select>
             <br />
-            ENGLISH - II <nav>(18EN251):</nav>{" "}
+            English - II <nav>(18EN251):</nav>{" "}
             <select onChange={cgpa} id="subject9">
               <option>O</option>
               <option>A+</option>
@@ -336,7 +350,7 @@ export default function Cgpa() {
               <option>RA-F</option>
             </select>
             <br />
-            MATHS - II <nav>(18MA243):</nav>{" "}
+            Maths - II <nav>(18MA243):</nav>{" "}
             <select onChange={cgpa} id="subject10">
               <option>O</option>
               <option>A+</option>
@@ -356,7 +370,7 @@ export default function Cgpa() {
               <option>RA-F</option>
             </select>
             <br />
-            PHYSICS <nav>(18PH043):</nav>{" "}
+            Physics <nav>(18PH043):</nav>{" "}
             <select onChange={cgpa} id="subject11">
               <option>O</option>
               <option>A+</option>
@@ -385,7 +399,7 @@ export default function Cgpa() {
               <option>RA-F</option>
             </select>
             <br />
-            PHYSICS Lab <nav>(18PH028):</nav>{" "}
+            Physics Lab <nav>(18PH028):</nav>{" "}
             <select onChange={cgpa} id="subject14">
               <option>O</option>
               <option>A+</option>
@@ -407,7 +421,7 @@ export default function Cgpa() {
         <div className="third">
           <h1>Semester 3</h1>
           <div className="one">
-            PYTHON <nav>(18CS043):</nav>
+            Python <nav>(18CS043):</nav>
             <select onChange={cgpa} id="subject19">
               <option>O</option>
               <option>A+</option>
@@ -417,7 +431,7 @@ export default function Cgpa() {
               <option>RA-F</option>
             </select>
             <br />
-            DATA STRUCTURES <nav>(18CS311):</nav>
+            Data Structures <nav>(18CS311):</nav>
             <select onChange={cgpa} id="subject20">
               <option>O</option>
               <option>A+</option>
@@ -457,7 +471,7 @@ export default function Cgpa() {
               <option>RA-F</option>
             </select>
             <br />
-            PYTHON Lab <nav>(18CS028):</nav>
+            Python Lab <nav>(18CS028):</nav>
             <select onChange={cgpa} id="subject18">
               <option>O</option>
               <option>A+</option>
@@ -467,7 +481,7 @@ export default function Cgpa() {
               <option>RA-F</option>
             </select>
             <br />
-            DATA STRUCTURES Lab <nav>(18CS321):</nav>
+            Data Structures Lab <nav>(18CS321):</nav>
             <select onChange={cgpa} id="subject22">
               <option>O</option>
               <option>A+</option>
@@ -477,7 +491,7 @@ export default function Cgpa() {
               <option>RA-F</option>
             </select>
             <br />
-            DIGITAL SYSTEMS Lab <nav>(18EC325):</nav>
+            Digital Systems Lab <nav>(18EC325):</nav>
             <select onChange={cgpa} id="subject23">
               <option>O</option>
               <option>A+</option>
@@ -679,7 +693,7 @@ export default function Cgpa() {
               <option>RA-F</option>
             </select>
             <br />
-            Elective-I{" "}
+            PE - I (OST or DWM) <nav className="click" onClick={()=>{setNum(0)}} data-bs-toggle="modal" data-bs-target="#elective">Click&view:</nav>
             <select onChange={cgpa} id="subject38">
               <option>O</option>
               <option>A+</option>
@@ -770,7 +784,7 @@ export default function Cgpa() {
               <option>RA-F</option>
             </select>
             <br />
-            Elective - II{" "}
+            PE - II (OOAD or MLT) <nav className="click" onClick={()=>{setNum(1)}} data-bs-toggle="modal" data-bs-target="#elective">Click&view:</nav>
             <select onChange={cgpa} id="subject45">
               <option>O</option>
               <option>A+</option>
@@ -780,7 +794,7 @@ export default function Cgpa() {
               <option>RA-F</option>
             </select>
             <br />
-            Elective - III{" "}
+            PE - III (GC or Ad hoc) <nav className="click" onClick={()=>{setNum(2)}} data-bs-toggle="modal" data-bs-target="#elective">Click&view:</nav>
             <select onChange={cgpa} id="subject46">
               <option>O</option>
               <option>A+</option>
@@ -790,7 +804,7 @@ export default function Cgpa() {
               <option>RA-F</option>
             </select>
             <br />
-            Open Elective - I{" "}
+            OE - I (Agile or .Net) <nav className="click" onClick={()=>{setNum(3)}} data-bs-toggle="modal" data-bs-target="#elective">Click&view:</nav>
             <select onChange={cgpa} id="subject47">
               <option>O</option>
               <option>A+</option>
@@ -891,7 +905,7 @@ export default function Cgpa() {
               <option>RA-F</option>
             </select>
             <br />
-            Elective - IV{" "}
+            PE - IV (IBM) <nav className="click" onClick={()=>{setNum(4)}} data-bs-toggle="modal" data-bs-target="#elective">Click&view:</nav>
             <select onChange={cgpa} id="subject55">
               <option>O</option>
               <option>A+</option>
@@ -901,7 +915,7 @@ export default function Cgpa() {
               <option>RA-F</option>
             </select>
             <br />
-            Open Elective - II{" "}
+            OE - II (HSN or BI) <nav className="click" onClick={()=>{setNum(5)}} data-bs-toggle="modal" data-bs-target="#elective">Click&view:</nav>
             <select onChange={cgpa} id="subject56">
               <option>O</option>
               <option>A+</option>
@@ -942,7 +956,7 @@ export default function Cgpa() {
         <div className="eighth">
           <h1>Semester 8</h1>
           <div className="one">
-            Elective – V{" "}
+            E – V{" "}
             <select onChange={cgpa} id="subject59">
               <option>O</option>
               <option>A+</option>
@@ -952,7 +966,7 @@ export default function Cgpa() {
               <option>RA-F</option>
             </select>
             <br />
-            Elective – VI{" "}
+            E – VI{" "}
             <select onChange={cgpa} id="subject60">
               <option>O</option>
               <option>A+</option>
@@ -962,7 +976,7 @@ export default function Cgpa() {
               <option>RA-F</option>
             </select>
             <br />
-            Open Elective - III
+            OE - III
             <select onChange={cgpa} id="subject61">
               <option>O</option>
               <option>A+</option>
@@ -999,11 +1013,11 @@ export default function Cgpa() {
       </button> */}
 
 
-<button onClick={print} class="btn btn-info bottom"><span className='icon-print'></span></button>
+<button onClick={print} className="btn btn-info bottom"><span className='icon-print'></span></button>
 
 
 
-<button type="button" class="btn btn-danger right" data-bs-toggle="modal" data-bs-target="#exampleModal">
+<button type="button" className="btn btn-danger right" data-bs-toggle="modal" data-bs-target="#exampleModal">
 <span className='icon'></span>
 </button>
 
@@ -1023,6 +1037,29 @@ export default function Cgpa() {
     </div>
   </div>
 </div>
+
+
+<div class="modal fade" id="elective" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">{elective[num].title}</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        {electivesub[num].map((ele)=>{
+          return(
+            <div>{ele}</div>
+          )
+        })}
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+
 
 
     </div>

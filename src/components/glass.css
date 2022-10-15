@@ -83,6 +83,13 @@ h1{
 }
 
 
+
+.click{
+    color : #0000EE !important;
+    cursor: pointer;
+}
+
+
 @media (max-width: 676px) { 
     .right{
        position: absolute;
