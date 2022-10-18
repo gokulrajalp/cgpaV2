@@ -57,6 +57,7 @@ Data.users.forEach((element) => {
         document.querySelector('.changetext').textContent="Successfully sent";
       }
         alert(res.data.message);
+        localStorage.removeItem("forgot_page");
         navigate('/password');
     })
 
