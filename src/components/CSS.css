@@ -329,3 +329,9 @@ h4
 table, th, td {
   border:1px solid black;
 }
+
+
+.text_forget{
+  color: red;
+  cursor: pointer;
+}

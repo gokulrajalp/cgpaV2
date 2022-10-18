@@ -48,9 +48,9 @@ let Data=useAuth();
         // alert(users.Password);
         // alert(localStorage.getItem("cgpa_pwd")===users.Password);
         if(localStorage.getItem("cgpa_pwd")===users.Password && localStorage.getItem("regNo")===users.regNo){
-        if(!users.cgpa_page){
-          navigate(`/`);
-        }
+        // if(!users.cgpa_page){
+        //   navigate(`/`);
+        // }
         let grade = users.grade;
         let i = 1;
         setCgpalist(users.cgpalist);
@@ -69,7 +69,11 @@ let Data=useAuth();
 
 
   useEffect(() => {
-    if(localStorage.getItem("cgpa_page")!="true"){
+    // alert("aathu")
+    if(localStorage.getItem("cgpa_page")==="true"){
+      
+     }else{
+      // alert("ithu")
       navigate('/');
      }
   }, []);
@@ -205,6 +209,7 @@ let Data=useAuth();
   }
 
  function save(){
+  localStorage.setItem("cgpa_page","true");
   localStorage.setItem("authentication","true");
   navigate(`/`);
  }
@@ -212,8 +217,8 @@ let Data=useAuth();
  function clear(){
   localStorage.clear();
   const userDoc = doc(db, "cgpa", id);
-  const newFields = { cgpa_page: false };
-  updateDoc(userDoc, newFields);
+  // const newFields = { cgpa_page: false };
+  // updateDoc(userDoc, newFields);
   navigate(`/`);
 }
 

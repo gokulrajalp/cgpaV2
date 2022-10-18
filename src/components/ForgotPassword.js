@@ -16,8 +16,9 @@ export default function ForgotPassword() {
 
   // const usersCollectionRef = collection(db, "cgpa");
   // const [users, setUsers] = useState([]);
-  const [mail, setMail] = useState("");
-  const [password, setPassword] = useState();
+  let mail = "";
+  let password = "";
+  
   const regNo= localStorage.getItem("regNo");
 
 
@@ -29,7 +30,17 @@ export default function ForgotPassword() {
   }, []);
 
   function verify() {
+
+    document.querySelector('.changetext').textContent="Sending...";
     
+Data.users.forEach((element) => {
+  
+      if (regNo === element.regNo) {
+          mail=element.mail;
+          password=element.Password;
+      }
+    });
+
 
     const values ={
       tomail:mail,
@@ -37,16 +48,14 @@ export default function ForgotPassword() {
       password:password
     }
 
-    Data.users.forEach(element => {
-      if (regNo === element.regNo) {
-          setMail(element.mail);
-          setPassword(element.Password);
-      }
-    });
+    
 
 
-    axios.post("http://localhost:8000/mail", values)
+    axios.post("https://gokulrajalp.herokuapp.com/mail", values)
     .then( res => {
+      if(res.data.message==="Password is sent to your regesterd Email ID"){
+        document.querySelector('.changetext').textContent="Successfully sent";
+      }
         alert(res.data.message);
         navigate('/password');
     })
@@ -94,14 +103,14 @@ export default function ForgotPassword() {
 
       {Data.users.map((users) => {
         if (regNo === users.regNo) {
-          let mail1 = users.mail.substring(4);
+          let mail1 = users.mail.substring(5);
           return (
-            <h4 className="text-primary text-center">****{mail1}</h4>
+            <h4 className="text-primary text-center">*****{mail1}</h4>
           );
         }
       })}
 
-        <button className="button5" onClick={verify}>Click Here to Sent</button>
+        <button className="button1 changetext" onClick={verify}>Click Here to Sent</button>
  
         
 

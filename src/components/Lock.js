@@ -36,9 +36,13 @@ export default function Lock() {
           localStorage.setItem("password_page","false");
           localStorage.setItem("cgpa_page","true");
           const userDoc = doc(db, "cgpa", users.id);
-          const newFields = { cgpa_page: true };
-          updateDoc(userDoc, newFields);
-          navigate(`/cgpa`);
+          // const newFields = { cgpa_page: true };
+          // updateDoc(userDoc, newFields);
+
+let bool = window.confirm(`${key} is found... Click ok to continue or cancel for new login`);
+if(bool){
+  navigate(`/cgpa`);
+}
         }}});
   }
 }

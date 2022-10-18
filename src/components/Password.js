@@ -85,7 +85,7 @@ function forget(){
 
         <button className="button1" type="submit">Verify</button>
         <p className="text_error">{error}</p>
-        <p className="text_error" onClick={forget}>Forget Password ?</p>
+        <p className="text_forget" onClick={forget}>Forget Password ?</p>
         
 
       </form>
