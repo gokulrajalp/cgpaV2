@@ -18,8 +18,8 @@ function App() {
         <Route exact path='/signin' element={<Signin/>}></Route>
         <Route exact path='/password' element={<Password/>}></Route>
         <Route exact path='/cgpa' element={<Cgpa/>}></Route>
-        <Route exact path='/gokulrajalpisadmin' element={<Admin/>}></Route>
-        {/* <Route exact path='/forgotpassword' element={<ForgotPassword/>}></Route> */}
+        {/* <Route exact path='/gokulrajalpisadmin' element={<Admin/>}></Route> */}
+        <Route exact path='/forgotpassword' element={<ForgotPassword/>}></Route>
       </Routes>
       </Router>
     </AuthProvider>
