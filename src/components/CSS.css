@@ -168,6 +168,16 @@ input:focus
 {
   margin-top: 20px;
 }
+
+.field:nth-child(6)
+{
+  margin-top: 20px;
+}
+
+.field:nth-child(7)
+{
+  margin-top: 20px;
+}
 .field span
 {
   position: absolute;

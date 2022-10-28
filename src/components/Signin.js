@@ -159,12 +159,12 @@ export default function Sign() {
 
               <div className="field">
                 <span className="bx bxs-key"></span>
-                <input placeholder="New Password" onChange={(e) => {setPassword(e.target.value);}} required/>
+                <input placeholder="New Password" type="password" onChange={(e) => {setPassword(e.target.value);}} required/>
                 </div>
 
               <div className="field">
               <span className="bx bxs-key"></span>
-                <input placeholder="Confirm Password" onChange={(e) => {setconfirmPassword(e.target.value);}} required/>
+                <input placeholder="Confirm Password" type="password" onChange={(e) => {setconfirmPassword(e.target.value);}} required/>
                 </div>
 
         <button className="button1" type="submit">Submit</button>

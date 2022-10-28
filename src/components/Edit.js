@@ -13,6 +13,12 @@ export default function Edit() {
   // const usersCollectionRef = collection(db, "cgpa");
   // const [users, setUsers] = useState([]);
   const [password, setPassword] = useState();
+  const [name, setName] = useState();
+  const [email, setEmail] = useState();
+  const [newPawword, setNewPawword] = useState();
+  const [confirmPawword, setConfirmPawword] = useState();
+
+
   const [error, setError] = useState();
   const [check, setCheck] = useState(false);
 
@@ -47,6 +53,25 @@ function forget(){
   navigate('/');
 }
 
+function name() {
+  document.querySelector('.name').classList.remove('d-none');
+  document.querySelector('.name-btn').classList.add('d-none');
+
+}
+
+function email() {
+  document.querySelector('.email').classList.remove('d-none');
+  document.querySelector('.email-btn').classList.add('d-none');
+
+}
+
+function password_edit() {
+  document.querySelector('.password').classList.remove('d-none');
+  document.querySelector('.password-confirm').classList.remove('d-none');
+
+  document.querySelector('.password-btn').classList.add('d-none');
+
+}
 
 
   useEffect(() => {
@@ -78,29 +103,30 @@ function forget(){
       <form onSubmit={verify}>
           <div className="field">
               <span className="bx bxs-key"></span>
-              <input placeholder="Current Password *" type='password' onChange={(e) => {setPassword(e.target.value);}} required/>
+              <input placeholder="Current Password *" type='password' onChange={(e) => {setPassword(e.target.value);}} />
           </div>
 
+          <button className="button1 name-btn" onClick={name}>Change Name</button>
 
-          <div className="field d-none" id="name">
+          <div className="field d-none name" >
               <span className="bx bxs-key"></span>
-              <input placeholder="Name" type='text' onChange={(e) => {setPassword(e.target.value);}} required/>
+              <input placeholder="Name" type='text' onChange={(e) => {setName(e.target.value);}} />
           </div>
 
-
-          <div className="field d-none" id="email">
+          <button className="button1 email-btn" onClick={email}>Change Email</button>
+          <div className="field d-none email">
               <span className="bx bxs-key"></span>
-              <input placeholder="Email" type='email' onChange={(e) => {setPassword(e.target.value);}} required/>
+              <input placeholder="Email" type='email' onChange={(e) => {setEmail(e.target.value);}} />
+          </div>
+          <button className="button1 password-btn" onClick={password_edit}>Change Password</button>
+          <div className="field d-none password">
+              <span className="bx bxs-key"></span>
+              <input placeholder="New Password" type='password' onChange={(e) => {setNewPawword(e.target.value);}} />
           </div>
 
-          <div className="field d-none" id="password">
+          <div className="field d-none password-confirm ">
               <span className="bx bxs-key"></span>
-              <input placeholder="New Password" type='password' onChange={(e) => {setPassword(e.target.value);}} required/>
-          </div>
-
-          <div className="field d-none" id="password">
-              <span className="bx bxs-key"></span>
-              <input placeholder="Confirm New Password" type='password' onChange={(e) => {setPassword(e.target.value);}} required/>
+              <input placeholder="Confirm New password" type='password' onChange={(e) => {setConfirmPawword(e.target.value);}} />
           </div>
 
         <button className="button1" type="submit">Update</button>

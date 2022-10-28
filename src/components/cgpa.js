@@ -5,15 +5,29 @@ import { db } from "../firebase-config";
 import { updateDoc, doc } from "firebase/firestore";
 import "./glass.css";
 import { useAuth } from "./Data";
-
+// import $ from "jquery";
 
 export default function Cgpa() {
 let Data=useAuth(); 
   const [sgpalist, setSgpalist] = useState([]);
   const [cgpalist, setCgpalist] = useState([]);
 
+  const [passwordTemp, setPasswordTemp] = useState();
+
 
   const [num, setNum] = useState(0);
+
+  function editname(){
+    navigate('/editname');
+  }
+
+  function editemail(){
+    navigate('/editemail');
+  }
+
+  function editpassword(){
+    navigate('/editpassword');
+  }
 
 
   let elective = [{title:"Professional Elective – I"},
@@ -71,7 +85,10 @@ let Data=useAuth();
   useEffect(() => {
     // alert("aathu")
     if(localStorage.getItem("cgpa_page")==="true"){
-      
+      if(localStorage.getItem("reloadonce")==="true"){
+        localStorage.setItem("reloadonce","false");
+        window.location.reload();
+      }
      }else{
       // alert("ithu")
       navigate('/');
@@ -106,6 +123,9 @@ let Data=useAuth();
     
 
     if(!modify){
+      // let myModal = new bootstrap.Modal(document.getElementById('ask'), {});
+      // myModal.show();
+      // $('#ask').modal('show');
     let password = prompt("Enter your Password to make any changes");
 
     Data.users.map((users) => {
@@ -211,7 +231,7 @@ let Data=useAuth();
  function save(){
   localStorage.setItem("cgpa_page","true");
   localStorage.setItem("authentication","true");
-  navigate(`/`);
+  navigate('/');
  }
  
  function clear(){
@@ -1026,8 +1046,15 @@ let Data=useAuth();
 <span className='icon'></span>
 </button>
 
+{/* <button type="button" className="btn btn-info" data-bs-toggle="modal" data-bs-target="#ask">
+<span className='icon'></span>
+</button> */}
 
-<div className="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<button type="button" className="btn btn-success right-buttom" data-bs-toggle="modal" data-bs-target="#edit">
+<span className='icon-edit'></span>
+</button>
+
+<div className="modal fade" id="exampleModal" tabIndex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div className="modal-dialog">
     <div className="modal-content">
       <div className="modal-header">
@@ -1035,8 +1062,8 @@ let Data=useAuth();
         <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div className="modal-body">
-        <button type="button" className="btn btn-success" onClick={save} data-bs-dismiss="modal">Stay sigin in this devise</button>
-        <button type="button" className="btn btn-danger float-end" onClick={clear} data-bs-dismiss="modal">Ask password everytime</button>
+        <button type="button" className="btn btn-success" onClick={save} data-bs-dismiss="modal">Save login info</button>
+        <button type="button" className="btn btn-danger float-end" onClick={clear} data-bs-dismiss="modal">Don't Save login info</button>
       </div>
       
     </div>
@@ -1044,14 +1071,63 @@ let Data=useAuth();
 </div>
 
 
-<div class="modal fade" id="elective" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+
+
+<div className="modal fade" id="edit" tabIndex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div className="modal-dialog">
+    <div className="modal-content">
+      <div className="modal-header">
+        <h5 className="modal-title" id="exampleModalLabel">Edit Personal Details</h5>
+        <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div className="modal-body d-flex justify-content-around">
+        <button type="button" className="btn btn-success" onClick={editname} data-bs-dismiss="modal">Edit Name</button>
+        <button type="button" className="btn btn-success " onClick={editemail} data-bs-dismiss="modal">Edit Email</button>
+        <button type="button" className="btn btn-success " onClick={editpassword} data-bs-dismiss="modal">Edit Password</button>
+      </div>
+      
+    </div>
+  </div>
+</div>
+
+
+
+
+
+<div class="modal fade" id="ask" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">{elective[num].title}</h5>
+        <h5 class="modal-title" id="exampleModalLabel">Enter your Password to make any changes</h5>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
+      <div class="input-group flex-nowrap">
+  <span class="input-group-text" id="addon-wrapping"><span className="bx bxs-key"></span></span>
+  <input type="password" class="form-control" placeholder="Password" aria-label="Username" aria-describedby="addon-wrapping" onChange={(e) => {setPasswordTemp(e.target.value);}} required/>
+</div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Ok</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+<div className="modal fade" id="elective" tabIndex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div className="modal-dialog">
+    <div className="modal-content">
+      <div className="modal-header">
+        <h5 className="modal-title" id="exampleModalLabel">{elective[num].title}</h5>
+        <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div className="modal-body">
         {electivesub[num].map((ele)=>{
           return(
             <div>{ele}</div>
