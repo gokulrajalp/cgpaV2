@@ -85,8 +85,8 @@ Data.users.forEach((element) => {
   return (
 
 <div className="rootDiv">
- <div class="content">
-      <div class="text"> {localStorage.getItem(`regNo`)} </div>
+ <div className="content">
+      <div className="text"> {localStorage.getItem(`regNo`)} </div>
       <div>Your password will sent to</div>
       
 
@@ -119,9 +119,9 @@ Data.users.forEach((element) => {
 
       
    
-      <div class="drak-light" onClick={mood}>
-          <i class="bx bx-moon moon"></i>
-          <i class="bx bx-sun sun"></i>
+      <div className="drak-light" onClick={mood}>
+          <i className="bx bx-moon moon"></i>
+          <i className="bx bx-sun sun"></i>
       </div>
   </div>
 

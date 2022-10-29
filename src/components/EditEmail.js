@@ -115,7 +115,7 @@ function forget(){
           
 
           <div className="field" >
-              <span className="bx bxs-user"></span>
+              <span className="bx bxs-envelope"></span>
               <input placeholder="Email *" type='email' onChange={(e) => {setEmail(e.target.value);}} required/>
           </div>
 
