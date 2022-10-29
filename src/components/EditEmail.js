@@ -19,15 +19,15 @@ export default function EditEmail() {
   const [error, setError] = useState();
   // const [check, setCheck] = useState(false);
 
-  // useEffect(() => {
+  useEffect(() => {
     
-  //   if(localStorage.getItem("editemail")==="true"){
-    // localStorage.removeItem('editemail');
-  //     
-  //    }else{
-  //   navigate('/cgpa');
-  // }
-  // }, []);
+    if(localStorage.getItem("editemail")==="true"){
+    localStorage.removeItem('editemail');
+      
+     }else{
+    navigate('/cgpa');
+  }
+  }, []);
 
   // useEffect(()=>{
   // if(check){

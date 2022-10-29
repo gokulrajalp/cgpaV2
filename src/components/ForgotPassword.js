@@ -24,7 +24,9 @@ export default function ForgotPassword() {
 
 
   useEffect(() => {
-    if(localStorage.getItem("forgot_page")!=="true"){
+    if(localStorage.getItem("forgot_page")==="true"){
+      localStorage.removeItem("forgot_page");
+     }else{
       navigate('/');
      }
   }, []);

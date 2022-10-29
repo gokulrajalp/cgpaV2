@@ -3,7 +3,7 @@ import "./CSS.css";
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { db } from "../firebase-config";
-import { updateDoc, doc } from "firebase/firestore";
+import { doc } from "firebase/firestore";
 import { useAuth } from "./Data";
 
 export default function Lock() {

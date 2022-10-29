@@ -5,7 +5,7 @@ import { db } from "../firebase-config";
 import { updateDoc, doc } from "firebase/firestore";
 import "./CSS.css";
 import { useAuth } from "./Data";
-import { async } from "@firebase/util";
+// import { async } from "@firebase/util";
 
 
 export default function EditName() {
@@ -29,12 +29,15 @@ export default function EditName() {
 
   // const [check, setCheck] = useState(false);
 
-  // useEffect(() => {
+  useEffect(() => {
     
-  //   if(localStorage.getItem("editname")!=="true"){
-  //     navigate('/cgpa');
-  //    }
-  // }, []);
+    if(localStorage.getItem("editname")==="true"){
+      localStorage.removeItem('editname');
+        
+       }else{
+      navigate('/cgpa');
+    }
+  }, []);
 
 
 

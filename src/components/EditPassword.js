@@ -19,7 +19,21 @@ export default function EditPassword() {
   const [error, setError] = useState();
 
 
+  useEffect(() => {
+    
+    if(localStorage.getItem("editpassword")==="true"){
+    localStorage.removeItem('editpassword');
+      
+     }else{
+    navigate('/cgpa');
+  }
+  }, []);
+
+
+
+
   function verify() {
+
     if(newPawword.length>=5){
     var key = localStorage.getItem("regNo");
     Data.users.forEach((users) => {

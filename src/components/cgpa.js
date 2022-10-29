@@ -12,20 +12,23 @@ let Data=useAuth();
   const [sgpalist, setSgpalist] = useState([]);
   const [cgpalist, setCgpalist] = useState([]);
 
-  const [passwordTemp, setPasswordTemp] = useState();
+  // const [passwordTemp, setPasswordTemp] = useState();
 
 
   const [num, setNum] = useState(0);
 
   function editname(){
+    localStorage.setItem("editname","true");
     navigate('/editname');
   }
 
   function editemail(){
+    localStorage.setItem("editemail","true");
     navigate('/editemail');
   }
 
   function editpassword(){
+    localStorage.setItem("editpassword","true");
     navigate('/editpassword');
   }
 
@@ -123,23 +126,27 @@ let Data=useAuth();
     
 
     if(!modify){
-      // let myModal = new bootstrap.Modal(document.getElementById('ask'), {});
-      // myModal.show();
-      // $('#ask').modal('show');
-    let password = prompt("Enter your Password to make any changes");
+      
+    if(window.confirm("Click OK to start edit the grade")){
+      setModify(true);
+      setTemp(true);
+    }else{
+      render();
+    }
 
-    Data.users.map((users) => {
-      if (regNo === users.regNo) {
-        if(password===users.Password){
-          setModify(true);
-          setTemp(true);
-        }
-        else{
-          alert("Password is wrong try again");
-          window.location.reload(false);
-        }
-      }
-    })
+
+  //   Data.users.map((users) => {
+  //     if (regNo === users.regNo) {
+  //       if(password===users.Password){
+  //         setModify(true);
+  //         setTemp(true);
+  //       }
+  //       else{
+  //         alert("Password is wrong try again");
+  //         window.location.reload(false);
+  //       }
+  //     }
+  //   })
   }
  
 
@@ -236,7 +243,7 @@ let Data=useAuth();
  
  function clear(){
   localStorage.clear();
-  const userDoc = doc(db, "cgpa", id);
+  // const userDoc = doc(db, "cgpa", id);
   // const newFields = { cgpa_page: false };
   // updateDoc(userDoc, newFields);
   navigate(`/`);
@@ -1046,9 +1053,7 @@ let Data=useAuth();
 <span className='icon'></span>
 </button>
 
-{/* <button type="button" className="btn btn-info" data-bs-toggle="modal" data-bs-target="#ask">
-<span className='icon'></span>
-</button> */}
+
 
 <button type="button" className="btn btn-success right-buttom" data-bs-toggle="modal" data-bs-target="#edit">
 <span className='icon-edit'></span>
@@ -1094,7 +1099,7 @@ let Data=useAuth();
 
 
 
-<div class="modal fade" id="ask" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+{/* <div class="modal fade" id="ask" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
@@ -1113,7 +1118,7 @@ let Data=useAuth();
       </div>
     </div>
   </div>
-</div>
+</div> */}
 
 
 
