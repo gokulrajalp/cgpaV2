@@ -53,7 +53,7 @@ Data.users.forEach((element) => {
     
 
 
-    axios.post("https://gokulrajalp.herokuapp.com/mail", values)
+    axios.post("https://cgpa-59hb.onrender.com/mail", values)
     .then( res => {
       if(res.data.message==="Password is sent to your regesterd Email ID"){
         document.querySelector('.changetext').textContent="Successfully sent";

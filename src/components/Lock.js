@@ -89,6 +89,7 @@ if(bool){
     } else {
       localStorage.setItem("regNo", regNo);
       localStorage.setItem("signin_page","true");
+       localStorage.setItem("signup","true");
       navigate("/signin");
     }
   }

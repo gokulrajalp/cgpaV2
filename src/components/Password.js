@@ -14,11 +14,19 @@ export default function Signin() {
   // const [users, setUsers] = useState([]);
   const [password, setPassword] = useState();
   const [error, setError] = useState();
+  const [success, setsuccess] = useState("WELCOME");
   const [check, setCheck] = useState(false);
 
   useEffect(() => {
     if(localStorage.getItem("password_page")!=="true"){
       navigate('/');
+     }
+
+     if(localStorage.getItem("signup")==="true"){
+      setsuccess("Signup successfully, reload the page to continue")
+      localStorage.removeItem("signup");
+     }else{
+      setsuccess("WELCOME");
      }
   }, []);
 
@@ -74,7 +82,7 @@ function forget(){
 
 <div className="rootDiv">
  <div className="content">
-      <div className="text">WELCOME</div>
+      <div className="text">{success}</div>
       <div className="text"> {localStorage.getItem(`regNo`)} </div>
 
       <form onSubmit={verify}>
