@@ -94,7 +94,7 @@ function forget(){
 
 <div className="rootDiv">
  <div className="content">
-      <div className="text">Edit your Email</div>
+      <div className="text">Edit your Password</div>
       <div className="text"> {localStorage.getItem(`regNo`)} </div>
 
       <form onSubmit={verify}>

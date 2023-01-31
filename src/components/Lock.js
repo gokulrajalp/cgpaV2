@@ -75,6 +75,11 @@ if(bool){
 
 
   function verify() {
+
+    
+
+
+
     var check = false;
     Data.users.forEach((users) => {
       if (regNo === users.regNo) {
@@ -83,7 +88,13 @@ if(bool){
       }
     });
 
-    if (check) {
+
+    if(regNo==="1913000"){
+      localStorage.setItem("Adminpassword_page","true");
+      navigate("/AdminPassword");
+
+    }
+    else if(check) {
       localStorage.setItem("password_page","true");
       navigate("/password");
     } else {
@@ -106,7 +117,7 @@ if(bool){
           </div>
 
         <button className="button1" type="submit">Verify</button>
-        <p className="text_replace" onClick={replace}>Click to use old Version</p>
+        {/* <p className="text_replace" onClick={replace}>Click to use old Version</p> */}
 
       </form>
       
