@@ -258,8 +258,7 @@ function checking(){
   Data.users.forEach((users) => {
         if ("lLbBntMgWIx43d8Kf8wV" === users.id) {
           
-            if(pwd===users.password){
-              
+            if(pwd===users.Password){
             }
             else{
               navigate('/');
