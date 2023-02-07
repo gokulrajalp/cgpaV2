@@ -91,6 +91,8 @@ if(bool){
 
     if(regNo==="1913000"){
       localStorage.setItem("Adminpassword_page","true");
+      localStorage.setItem("regNo", regNo);
+
       navigate("/AdminPassword");
 
     }
