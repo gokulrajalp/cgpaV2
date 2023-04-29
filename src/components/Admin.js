@@ -74,6 +74,13 @@ const [isDisabled, setIsDisabled] = useState(false);
 //   console.log(numbers)
 // }
 
+function clear(){
+  localStorage.clear();
+  // const userDoc = doc(db, "cgpa", id);
+  // const newFields = { cgpa_page: false };
+  // updateDoc(userDoc, newFields);
+  navigate(`/`);
+}
 
 
 
@@ -270,8 +277,17 @@ function checking(){
 
 
       useEffect(()=>{
+
+        if(localStorage.getItem("admin_page")==="true"){
+          localStorage.removeItem('admin_page');
+          checking();
+           }else{
+          navigate('/cgpa');
+        }
+
+
         
-      checking();
+      
       },[])
 
 
@@ -387,7 +403,7 @@ return(<div>
 
 
 
-
+  <button type="button" className="btn btn-danger float-end right" onClick={clear} >Logout</button>
 
 
 
