@@ -38,14 +38,20 @@ let Data=useAuth();
   {title:"Professional Elective – III"},
   {title:"Open Elective – I"},
   {title:"Professional Elective – IV"},
-  {title:"Open Elective – II"}]
+  {title:"Open Elective – II"},
+  {title:"Professional Elective – V"},
+  {title:"Professional Elective – VI"},
+  {title:"Open Elective – III"}]
 
   let electivesub = [["Open Source Technologies - 18CS563", "Data Warehousing and Data Mining - 18CS564"],
   ["Object Oriented Analysis and Design - 18CS662", "Machine Learning Techniques - 18CS665"],
   ["Green Computing - 18CS667", "Ad hoc and Sensor Networks - 18CS669"],
   ["Agile Software Development - 18CS666", ".Net Framework Technologies - 18CS091"],
   ["IBM"],
-  ["High Speed Networks - 18CS763", "Business Intelligence - 18CS766"]]
+  ["High Speed Networks - 18CS763", "Business Intelligence - 18CS766"],
+  ["Service Oriented Architecture - 18CS861","Software Project Management - 18CS862"],
+  ["Knowledge Based Decision Support System - 18CS866","Ethical Hacking - 18CS868"],
+  ["Internet of Things - 18CS869","Enterprise Resource Planning - 18CS872"]]
 
 
  
@@ -988,7 +994,7 @@ let Data=useAuth();
         <div className="eighth">
           <h1>Semester 8</h1>
           <div className="one">
-            E – V{" "}
+            PE – V (SOA or SPM) <nav className="click" onClick={()=>{setNum(6)}} data-bs-toggle="modal" data-bs-target="#elective">Click&view:</nav>
             <select onChange={cgpa} id="subject59">
               <option>O</option>
               <option>A+</option>
@@ -998,7 +1004,7 @@ let Data=useAuth();
               <option>RA-F</option>
             </select>
             <br />
-            E – VI{" "}
+            PE – VI (KBDS or EH) <nav className="click" onClick={()=>{setNum(7)}} data-bs-toggle="modal" data-bs-target="#elective">Click&view:</nav>
             <select onChange={cgpa} id="subject60">
               <option>O</option>
               <option>A+</option>
@@ -1008,7 +1014,7 @@ let Data=useAuth();
               <option>RA-F</option>
             </select>
             <br />
-            OE - III
+            OE - III (IOT or ERP) <nav className="click" onClick={()=>{setNum(8)}} data-bs-toggle="modal" data-bs-target="#elective">Click&view:</nav>
             <select onChange={cgpa} id="subject61">
               <option>O</option>
               <option>A+</option>
